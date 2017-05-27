@@ -5,6 +5,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
 {
     protected byte Id { get; }
     public abstract string Name { get; }
+    public abstract Direction Inverse { get; }
 
     private Direction(byte id)
     {
@@ -28,6 +29,8 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         {
             public override string Name { get; }
 
+            public override Direction Inverse => South;
+
             public NorthCardinal() : base(0)
             {
                 this.Name = nameof(North);
@@ -37,6 +40,8 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         public sealed class SouthCardinal : Cardinal
         {
             public override string Name { get; }
+
+            public override Direction Inverse => North;
 
             public SouthCardinal() : base(1)
             {
@@ -48,6 +53,8 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         {
             public override string Name { get; }
 
+            public override Direction Inverse => West;
+
             public EastCardinal() : base(2)
             {
                 this.Name = nameof(East);
@@ -57,6 +64,8 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         public sealed class WestCardinal : Cardinal
         {
             public override string Name { get; }
+
+            public override Direction Inverse => East;
 
             public WestCardinal() : base(3)
             {

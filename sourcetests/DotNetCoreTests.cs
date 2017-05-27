@@ -22,6 +22,12 @@ namespace sourcetests
         public void West_Is_Not_Null() => Assert.IsNotNull(Direction.Cardinal.West);
 
         [TestMethod]
+        public void North_Is_Opposite_South() => Assert.IsTrue(Direction.Cardinal.North.Inverse.Equals(Direction.Cardinal.South) && Direction.Cardinal.South.Inverse.Equals(Direction.Cardinal.North));
+
+        [TestMethod]
+        public void East_Is_Opposite_West() => Assert.IsTrue(Direction.Cardinal.East.Inverse.Equals(Direction.Cardinal.West) && Direction.Cardinal.West.Inverse.Equals(Direction.Cardinal.East));
+
+        [TestMethod]
         public void All_Directions_Are_Unique() => CollectionAssert.AllItemsAreUnique(Enumerable.Concat(Direction.CardinalDirections, Direction.IntercardinalDirections).ToArray(), "Duplicate(s) detected.");
 
         [TestMethod]
