@@ -28,7 +28,15 @@ namespace sourcetests
         public void East_Is_Opposite_West() => Assert.IsTrue(Direction.Cardinal.East.Inverse.Equals(Direction.Cardinal.West) && Direction.Cardinal.West.Inverse.Equals(Direction.Cardinal.East));
 
         [TestMethod]
-        public void All_Directions_Are_Unique() => CollectionAssert.AllItemsAreUnique(Enumerable.Concat(Direction.CardinalDirections, Direction.IntercardinalDirections).ToArray(), "Duplicate(s) detected.");
+        public void All_Directions_Are_Unique() => CollectionAssert.AllItemsAreUnique(Enumerable.Concat(Direction.CardinalDirections.ToArray(), Direction.IntercardinalDirections.ToArray()).Concat(Direction.IntermediateCardinalDirections.ToArray()).ToArray(), "Duplicate(s) detected.");
+
+        [TestMethod]
+        public void All_Direction_Inversions_Are_Unique() 
+            => CollectionAssert.AllItemsAreUnique(
+                Enumerable.Concat(
+                    Direction.CardinalDirections.Select(d => d.Inverse).ToArray(), 
+                    Direction.IntercardinalDirections.Select(d => d.Inverse).ToArray())
+                        .Concat(Direction.IntermediateCardinalDirections.Select(d => d.Inverse).ToArray()).ToArray(), "Duplicate(s) detected.");
 
         [TestMethod]
         public void Dot_Net_Framework_Compiles_Globally_NonNull_TypeSafeEnum_Enumerations()
