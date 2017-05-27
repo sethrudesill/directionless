@@ -325,7 +325,7 @@ public abstract class Direction : System.IComparable<Direction>, System.IEquatab
 
             public SoutheastIntermediateCardinal() : base(15)
             {
-                this.Name = nameof(Southwest);
+                this.Name = nameof(Southeast);
             }
         }
     }
