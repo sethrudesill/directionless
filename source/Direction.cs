@@ -14,7 +14,11 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
 
     public abstract partial class Cardinal : Direction
     {
-        public static readonly Cardinal North = new NorthCardinal(), South = new SouthCardinal(), East = new EastCardinal(), West = new WestCardinal();
+        public static readonly Cardinal 
+            North = new NorthCardinal(), 
+            South = new SouthCardinal(), 
+            East = new EastCardinal(), 
+            West = new WestCardinal();
 
         /// <summary>
         /// 
@@ -74,22 +78,18 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         }
     }
 
-    public abstract partial class Intercardinal : Direction
+    public abstract class Intercardinal : Direction
     {
-        internal static readonly Intercardinal NorthNortheast, NorthNorthwest, SouthSoutheast, SouthSouthwest, EastNortheast, EastSoutheast, WestNorthwest, WestSouthwest;
-
-        static Intercardinal()
-        {
-            NorthNortheast = new NorthNortheastIntercardinal();
-            NorthNorthwest = new NorthNorthwestIntercardinal();
-            SouthSoutheast = new SouthSoutheastIntercardinal();
-            SouthSouthwest = new SouthSouthwestIntercardinal();
-            EastNortheast = new EastNortheastIntercardinal();
-            EastSoutheast = new EastSoutheastIntercardinal();
-            WestNorthwest = new WestNorthwestIntercardinal();
+        internal static readonly Intercardinal
+            NorthNortheast = new NorthNortheastIntercardinal(),
+            NorthNorthwest = new NorthNorthwestIntercardinal(),
+            SouthSoutheast = new SouthSoutheastIntercardinal(),
+            SouthSouthwest = new SouthSouthwestIntercardinal(),
+            EastNortheast = new EastNortheastIntercardinal(),
+            EastSoutheast = new EastSoutheastIntercardinal(),
+            WestNorthwest = new WestNorthwestIntercardinal(),
             WestSouthwest = new WestSouthwestIntercardinal();
-        }
-
+        
         private Intercardinal(byte id) : base(id)
         {
 
@@ -242,5 +242,6 @@ public abstract partial class Direction
         yield return Cardinal.North;
     }
 
-    public static System.Collections.Generic.IEnumerable<Direction> CycleCounterClockwise() => System.Linq.Enumerable.Reverse(CycleClockwise());
+    public static System.Collections.Generic.IEnumerable<Direction> CycleCounterClockwise() 
+        => System.Linq.Enumerable.Reverse(CycleClockwise());
 }
