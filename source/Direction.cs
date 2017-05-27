@@ -317,6 +317,22 @@ public abstract partial class Direction
     public static System.Collections.Generic.IEnumerable<Direction> CycleCounterClockwise() 
         => System.Linq.Enumerable.Reverse(CycleClockwise());
 
+    public static System.Collections.Generic.IEnumerable<Direction> RevolveClockwise()
+    {
+        foreach (var direction in CycleClockwise())
+            yield return direction;
+
+        //yield return System.Linq.Enumerable.First(CycleClockwise());
+    }
+
+    public static System.Collections.Generic.IEnumerable<Direction> RevolveCounterClockwise()
+    {
+        foreach (var direction in CycleCounterClockwise())
+            yield return direction;
+
+        //yield return System.Linq.Enumerable.First(CycleCounterClockwise());
+    }
+
     public static bool operator ==(Direction left, Direction right) 
         => left != null && right != null && left.Equals(right);
 
