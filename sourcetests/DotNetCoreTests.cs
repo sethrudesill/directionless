@@ -39,6 +39,19 @@ namespace sourcetests
                         .Concat(Direction.IntermediateCardinalDirections.Select(d => d.Inverse).ToArray()).ToArray(), "Duplicate(s) detected.");
 
         [TestMethod]
+        public void All_Direction_Inversions_Are_Pointers_To_Different_Directions()
+        {
+            foreach (var direction in Direction.CardinalDirections)
+                Assert.AreNotEqual(direction, direction.Inverse, $"Inverse of {direction} is itself.");
+
+            foreach (var direction in Direction.IntercardinalDirections)
+                Assert.AreNotEqual(direction, direction.Inverse, $"Inverse of {direction} is itself.");
+
+            foreach (var direction in Direction.IntermediateCardinalDirections)
+                Assert.AreNotEqual(direction, direction.Inverse, $"Inverse of {direction} is itself.");
+        }
+
+        [TestMethod]
         public void Dot_Net_Framework_Compiles_Globally_NonNull_TypeSafeEnum_Enumerations()
         {
             CollectionAssert.AllItemsAreNotNull(Direction.CardinalDirections.ToArray(),
