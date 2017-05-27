@@ -63,7 +63,7 @@ namespace sourcetests
             => Assert.AreNotEqual(Direction.CycleClockwise().First(), Direction.CycleClockwise().Last());
 
         [TestMethod]
-        public void Revolving_Terminates_With_Overlap() => Assert.AreEqual(Direction.RevolveClockwise().First(), Direction.RevolveClockwise().Last());
+        public void Rotating_Terminates_With_Overlap() => Assert.AreEqual(Direction.RotateClockwise().First(), Direction.RotateClockwise().Last());
 
         [TestMethod]
         public void Dot_Net_Framework_Compiles_Globally_NonNull_TypeSafeEnum_Enumerations()

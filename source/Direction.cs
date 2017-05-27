@@ -317,7 +317,7 @@ public abstract partial class Direction
     public static System.Collections.Generic.IEnumerable<Direction> CycleCounterClockwise() 
         => System.Linq.Enumerable.Reverse(CycleClockwise());
 
-    public static System.Collections.Generic.IEnumerable<Direction> RevolveClockwise()
+    public static System.Collections.Generic.IEnumerable<Direction> RotateClockwise()
     {
         foreach (var direction in CycleClockwise())
             yield return direction;
@@ -325,7 +325,7 @@ public abstract partial class Direction
         yield return System.Linq.Enumerable.First(CycleClockwise());
     }
 
-    public static System.Collections.Generic.IEnumerable<Direction> RevolveCounterClockwise()
+    public static System.Collections.Generic.IEnumerable<Direction> RotateCounterClockwise()
     {
         foreach (var direction in CycleCounterClockwise())
             yield return direction;
