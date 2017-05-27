@@ -10,25 +10,32 @@ namespace sourcetests
     public class DotNetCoreTests
     {
         [TestMethod]
-        public void North_Is_Not_Null() => Assert.IsNotNull(Direction.Cardinal.North);
+        public void North_Is_Not_Null() 
+            => Assert.IsNotNull(Direction.Cardinal.North);
 
         [TestMethod]
-        public void East_Is_Not_Null() => Assert.IsNotNull(Direction.Cardinal.East);
+        public void East_Is_Not_Null() 
+            => Assert.IsNotNull(Direction.Cardinal.East);
 
         [TestMethod]
-        public void South_Is_Not_Null() => Assert.IsNotNull(Direction.Cardinal.South);
+        public void South_Is_Not_Null() 
+            => Assert.IsNotNull(Direction.Cardinal.South);
 
         [TestMethod]
-        public void West_Is_Not_Null() => Assert.IsNotNull(Direction.Cardinal.West);
+        public void West_Is_Not_Null() 
+            => Assert.IsNotNull(Direction.Cardinal.West);
 
         [TestMethod]
-        public void North_Is_Opposite_South() => Assert.IsTrue(Direction.Cardinal.North.Inverse.Equals(Direction.Cardinal.South) && Direction.Cardinal.South.Inverse.Equals(Direction.Cardinal.North));
+        public void North_Is_Opposite_South() 
+            => Assert.IsTrue(Direction.Cardinal.North.Inverse.Equals(Direction.Cardinal.South) && Direction.Cardinal.South.Inverse.Equals(Direction.Cardinal.North));
 
         [TestMethod]
-        public void East_Is_Opposite_West() => Assert.IsTrue(Direction.Cardinal.East.Inverse.Equals(Direction.Cardinal.West) && Direction.Cardinal.West.Inverse.Equals(Direction.Cardinal.East));
+        public void East_Is_Opposite_West() 
+            => Assert.IsTrue(Direction.Cardinal.East.Inverse.Equals(Direction.Cardinal.West) && Direction.Cardinal.West.Inverse.Equals(Direction.Cardinal.East));
 
         [TestMethod]
-        public void All_Directions_Are_Unique() => CollectionAssert.AllItemsAreUnique(Enumerable.Concat(Direction.CardinalDirections.ToArray(), Direction.IntercardinalDirections.ToArray()).Concat(Direction.IntermediateCardinalDirections.ToArray()).ToArray(), "Duplicate(s) detected.");
+        public void All_Directions_Are_Unique() 
+            => CollectionAssert.AllItemsAreUnique(Enumerable.Concat(Direction.CardinalDirections.ToArray(), Direction.IntercardinalDirections.ToArray()).Concat(Direction.IntermediateCardinalDirections.ToArray()).ToArray(), "Duplicate(s) detected.");
 
         [TestMethod]
         public void All_Direction_Inversions_Are_Unique() 
@@ -50,6 +57,10 @@ namespace sourcetests
             foreach (var direction in Direction.IntermediateCardinalDirections)
                 Assert.AreNotEqual(direction, direction.Inverse, $"Inverse of {direction} is itself.");
         }
+
+        [TestMethod]
+        public void Cycling_Terminates_Prior_To_Overlap() 
+            => Assert.AreNotEqual(Direction.CycleClockwise().First(), Direction.CycleClockwise().Last());
 
         [TestMethod]
         public void Dot_Net_Framework_Compiles_Globally_NonNull_TypeSafeEnum_Enumerations()

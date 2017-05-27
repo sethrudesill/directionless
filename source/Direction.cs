@@ -1,6 +1,7 @@
 ﻿/// <summary>
 ///     Private class-constructor definitions are here because they are most important. Do not change these (yet).
 /// </summary>
+[System.Diagnostics.DebuggerDisplay(nameof(Name))]
 public abstract partial class Direction : System.IComparable<Direction>, System.IEquatable<Direction>
 {
     protected byte Id { get; }
@@ -15,7 +16,9 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
     public int CompareTo(Direction other) => other?.Id.CompareTo(this.Id) ?? -1;
     public bool Equals(Direction other) => other?.GetHashCode().Equals(this.GetHashCode()) ?? false;
     public override bool Equals(object obj) => (obj as Direction)?.Equals(this) ?? false;
-    public override int GetHashCode() => this.Id;    
+    public override int GetHashCode() => this.Id;
+
+    public override string ToString() => Name;
 
     public abstract partial class Cardinal : Direction
     {
