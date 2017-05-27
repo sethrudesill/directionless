@@ -80,19 +80,107 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
 
         static Intercardinal()
         {
-            NorthNortheast = default(Intercardinal);
-            NorthNorthwest = default(Intercardinal);
-            SouthSoutheast = default(Intercardinal);
-            SouthSouthwest = default(Intercardinal);
-            EastNortheast = default(Intercardinal);
-            EastSoutheast = default(Intercardinal);
-            WestNorthwest = default(Intercardinal);
-            WestSouthwest = default(Intercardinal);
+            NorthNortheast = new NorthNortheastIntercardinal();
+            NorthNorthwest = new NorthNorthwestIntercardinal();
+            SouthSoutheast = new SouthSoutheastIntercardinal();
+            SouthSouthwest = new SouthSouthwestIntercardinal();
+            EastNortheast = new EastNortheastIntercardinal();
+            EastSoutheast = new EastSoutheastIntercardinal();
+            WestNorthwest = new WestNorthwestIntercardinal();
+            WestSouthwest = new WestSouthwestIntercardinal();
         }
 
         private Intercardinal(byte id) : base(id)
         {
 
+        }
+
+        public sealed class NorthNortheastIntercardinal : Intercardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => SouthSouthwest;
+
+            public NorthNortheastIntercardinal() : base(4)
+            {
+                this.Name = nameof(NorthNortheast);
+            }
+        }
+
+        public sealed class NorthNorthwestIntercardinal : Intercardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => SouthSoutheast;
+
+            public NorthNorthwestIntercardinal() : base(5)
+            {
+                this.Name = nameof(NorthNorthwest);
+            }
+        }
+
+        public sealed class SouthSoutheastIntercardinal : Intercardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => NorthNorthwest;
+
+            public SouthSoutheastIntercardinal() : base(4)
+            {
+                this.Name = nameof(SouthSoutheast);
+            }
+        }
+
+        public sealed class SouthSouthwestIntercardinal : Intercardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => NorthNortheast;
+
+            public SouthSouthwestIntercardinal() : base(5)
+            {
+                this.Name = nameof(SouthSouthwest);
+            }
+        }
+
+        public sealed class EastNortheastIntercardinal : Intercardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => WestSouthwest;
+
+            public EastNortheastIntercardinal() : base(6)
+            {
+                this.Name = nameof(EastNortheast);
+            }
+        }
+
+        public sealed class EastSoutheastIntercardinal : Intercardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => WestNorthwest;
+
+            public EastSoutheastIntercardinal() : base(7)
+            {
+                this.Name = nameof(EastSoutheast);
+            }
+        }
+
+        public sealed class WestSouthwestIntercardinal : Intercardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => EastNortheast;
+
+            public WestSouthwestIntercardinal() : base(8)
+            {
+                this.Name = nameof(WestSouthwest);
+            }
+        }
+
+        public sealed class WestNorthwestIntercardinal : Intercardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => WestNorthwest;
+
+            public WestNorthwestIntercardinal() : base(9)
+            {
+                this.Name = nameof(WestNorthwest);
+            }
         }
     }
 
