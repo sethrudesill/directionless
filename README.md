@@ -1,2 +1,2 @@
 # directionless
-C#.NET TypeSafeEnum cardinal directions.
+C# 7.1 and .NET Standard 2.0 cardinal & intercardinal TypeSafeEnum written.
