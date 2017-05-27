@@ -3,12 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>directionless</AssemblyName>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Seth Rudesill</Authors>
     <Company />
     <Product>directionless</Product>
     <Description>.NET Core 2.0 cardinal &amp; intercardinal TypeSafeEnum written in C# 7.1.</Description>
     <Copyright>Copyright © Seth Rudesill 2017</Copyright>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

@@ -83,7 +83,9 @@ public abstract class Direction : System.IComparable<Direction>, System.IEquatab
         this.Id = id;
     }
 
-    public int CompareTo(Direction other) => other?.Id.CompareTo(this.Id) ?? -1;
+    public int CompareTo(Direction other) 
+        => other?.Id.CompareTo(this.Id) ?? -1;
+
     public bool Equals(Direction other) 
         => other?.GetHashCode().Equals(this.GetHashCode()) ?? false;
 
