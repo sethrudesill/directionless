@@ -311,7 +311,7 @@ public abstract partial class Direction
         yield return Intercardinal.WestNorthwest;
         yield return IntermediateCardinal.Northwest;
         yield return Intercardinal.NorthNorthwest;
-        yield return Cardinal.North;
+        yield break;
     }
 
     public static System.Collections.Generic.IEnumerable<Direction> CycleCounterClockwise() 
