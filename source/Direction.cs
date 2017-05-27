@@ -122,7 +122,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             public override string Name { get; }
             public override Direction Inverse => NorthNorthwest;
 
-            public SouthSoutheastIntercardinal() : base(4)
+            public SouthSoutheastIntercardinal() : base(6)
             {
                 this.Name = nameof(SouthSoutheast);
             }
@@ -133,7 +133,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             public override string Name { get; }
             public override Direction Inverse => NorthNortheast;
 
-            public SouthSouthwestIntercardinal() : base(5)
+            public SouthSouthwestIntercardinal() : base(7)
             {
                 this.Name = nameof(SouthSouthwest);
             }
@@ -144,7 +144,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             public override string Name { get; }
             public override Direction Inverse => WestSouthwest;
 
-            public EastNortheastIntercardinal() : base(6)
+            public EastNortheastIntercardinal() : base(8)
             {
                 this.Name = nameof(EastNortheast);
             }
@@ -155,7 +155,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             public override string Name { get; }
             public override Direction Inverse => WestNorthwest;
 
-            public EastSoutheastIntercardinal() : base(7)
+            public EastSoutheastIntercardinal() : base(9)
             {
                 this.Name = nameof(EastSoutheast);
             }
@@ -166,7 +166,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             public override string Name { get; }
             public override Direction Inverse => EastNortheast;
 
-            public WestSouthwestIntercardinal() : base(8)
+            public WestSouthwestIntercardinal() : base(10)
             {
                 this.Name = nameof(WestSouthwest);
             }
@@ -177,7 +177,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             public override string Name { get; }
             public override Direction Inverse => WestNorthwest;
 
-            public WestNorthwestIntercardinal() : base(9)
+            public WestNorthwestIntercardinal() : base(11)
             {
                 this.Name = nameof(WestNorthwest);
             }
