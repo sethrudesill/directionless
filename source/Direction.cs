@@ -25,7 +25,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
 
         }
 
-        public sealed class NorthCardinal : Cardinal
+        private sealed class NorthCardinal : Cardinal
         {
             public override string Name { get; }
 
@@ -37,7 +37,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
 
-        public sealed class SouthCardinal : Cardinal
+        private sealed class SouthCardinal : Cardinal
         {
             public override string Name { get; }
 
@@ -49,7 +49,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
 
-        public sealed class EastCardinal : Cardinal
+        private sealed class EastCardinal : Cardinal
         {
             public override string Name { get; }
 
@@ -61,7 +61,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
 
-        public sealed class WestCardinal : Cardinal
+        private sealed class WestCardinal : Cardinal
         {
             public override string Name { get; }
 
@@ -95,7 +95,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
 
         }
 
-        public sealed class NorthNortheastIntercardinal : Intercardinal
+        private sealed class NorthNortheastIntercardinal : Intercardinal
         {
             public override string Name { get; }
             public override Direction Inverse => SouthSouthwest;
@@ -106,7 +106,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
 
-        public sealed class NorthNorthwestIntercardinal : Intercardinal
+        private sealed class NorthNorthwestIntercardinal : Intercardinal
         {
             public override string Name { get; }
             public override Direction Inverse => SouthSoutheast;
@@ -117,7 +117,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
 
-        public sealed class SouthSoutheastIntercardinal : Intercardinal
+        private sealed class SouthSoutheastIntercardinal : Intercardinal
         {
             public override string Name { get; }
             public override Direction Inverse => NorthNorthwest;
@@ -128,7 +128,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
 
-        public sealed class SouthSouthwestIntercardinal : Intercardinal
+        private sealed class SouthSouthwestIntercardinal : Intercardinal
         {
             public override string Name { get; }
             public override Direction Inverse => NorthNortheast;
@@ -139,7 +139,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
 
-        public sealed class EastNortheastIntercardinal : Intercardinal
+        private sealed class EastNortheastIntercardinal : Intercardinal
         {
             public override string Name { get; }
             public override Direction Inverse => WestSouthwest;
@@ -150,7 +150,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
 
-        public sealed class EastSoutheastIntercardinal : Intercardinal
+        private sealed class EastSoutheastIntercardinal : Intercardinal
         {
             public override string Name { get; }
             public override Direction Inverse => WestNorthwest;
@@ -161,7 +161,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
 
-        public sealed class WestSouthwestIntercardinal : Intercardinal
+        private sealed class WestSouthwestIntercardinal : Intercardinal
         {
             public override string Name { get; }
             public override Direction Inverse => EastNortheast;
@@ -172,7 +172,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
 
-        public sealed class WestNorthwestIntercardinal : Intercardinal
+        private sealed class WestNorthwestIntercardinal : Intercardinal
         {
             public override string Name { get; }
             public override Direction Inverse => WestNorthwest;
