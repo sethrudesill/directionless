@@ -322,7 +322,7 @@ public abstract partial class Direction
         foreach (var direction in CycleClockwise())
             yield return direction;
 
-        //yield return System.Linq.Enumerable.First(CycleClockwise());
+        yield return System.Linq.Enumerable.First(CycleClockwise());
     }
 
     public static System.Collections.Generic.IEnumerable<Direction> RevolveCounterClockwise()
@@ -330,7 +330,7 @@ public abstract partial class Direction
         foreach (var direction in CycleCounterClockwise())
             yield return direction;
 
-        //yield return System.Linq.Enumerable.First(CycleCounterClockwise());
+        yield return System.Linq.Enumerable.First(CycleCounterClockwise());
     }
 
     public static bool operator ==(Direction left, Direction right) 
