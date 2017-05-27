@@ -12,6 +12,11 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         Id = id;
     }
 
+    public int CompareTo(Direction other) => other?.Id.CompareTo(this.Id) ?? -1;
+    public bool Equals(Direction other) => other?.GetHashCode().Equals(this.GetHashCode()) ?? false;
+    public override bool Equals(object obj) => (obj as Direction)?.Equals(this) ?? false;
+    public override int GetHashCode() => this.Id;    
+
     public abstract partial class Cardinal : Direction
     {
         public static readonly Cardinal 
@@ -241,13 +246,6 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
     }
-
-    public int CompareTo(Direction other) => other?.Id.CompareTo(this.Id) ?? -1;
-    public bool Equals(Direction other) => other?.GetHashCode().Equals(this.GetHashCode()) ?? false;
-    public override bool Equals(object obj) => (obj as Direction)?.Equals(this) ?? false;
-    public override int GetHashCode() => this.Id;
-    public static bool operator ==(Direction left, Direction right) => left != null && right != null && left.Equals(right);
-    public static bool operator !=(Direction left, Direction right) => !(left == right);
 }
 
 /// <summary>
@@ -315,4 +313,10 @@ public abstract partial class Direction
 
     public static System.Collections.Generic.IEnumerable<Direction> CycleCounterClockwise() 
         => System.Linq.Enumerable.Reverse(CycleClockwise());
+
+    public static bool operator ==(Direction left, Direction right) 
+        => left != null && right != null && left.Equals(right);
+
+    public static bool operator !=(Direction left, Direction right) 
+        => !(left == right);
 }
