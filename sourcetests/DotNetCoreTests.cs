@@ -58,6 +58,8 @@ namespace sourcetests
                 $"IReadonlyList {nameof(Direction.CardinalDirections)} contains null-pointer-reference(s).");
             CollectionAssert.AllItemsAreNotNull(Direction.IntercardinalDirections.ToArray(),
                 $"IReadonlyList {nameof(Direction.IntercardinalDirections)} contains null-pointer-reference(s).");
+            CollectionAssert.AllItemsAreNotNull(Direction.IntermediateCardinalDirections.ToArray(),
+                $"IReadonlyList {nameof(Direction.IntermediateCardinalDirections)} contains null-pointer-reference(s).");
         }
     }
 }
