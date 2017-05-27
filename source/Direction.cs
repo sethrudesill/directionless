@@ -175,7 +175,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         private sealed class WestNorthwestIntercardinal : Intercardinal
         {
             public override string Name { get; }
-            public override Direction Inverse => WestNorthwest;
+            public override Direction Inverse => EastSoutheast;
 
             public WestNorthwestIntercardinal() : base(11)
             {
@@ -233,7 +233,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         private sealed class SoutheastIntermediateCardinal : IntermediateCardinal
         {
             public override string Name { get; }
-            public override Direction Inverse => Northeast;
+            public override Direction Inverse => Northwest;
 
             public SoutheastIntermediateCardinal() : base(15)
             {
