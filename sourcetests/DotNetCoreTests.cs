@@ -59,6 +59,15 @@ namespace sourcetests
         }
 
         [TestMethod]
+        public void All_Direction_Names_Are_Unique()
+            => CollectionAssert.AllItemsAreUnique(
+                Enumerable.Concat(
+                        Direction.CardinalDirections.Select(d => d.Name).ToArray(),
+                        Direction.IntercardinalDirections.Select(d => d.Name).ToArray())
+                    .Concat(Direction.IntermediateCardinalDirections.Select(d => d.Name).ToArray()).ToArray(), "Duplicate(s) detected.");
+
+
+        [TestMethod]
         public void Cycling_Terminates_Prior_To_Overlap() 
             => Assert.AreNotEqual(Direction.CycleClockwise().First(), Direction.CycleClockwise().Last());
 
