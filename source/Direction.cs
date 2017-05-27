@@ -184,6 +184,64 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         }
     }
 
+    public abstract class IntermediateCardinal : Direction
+    {
+        public static readonly IntermediateCardinal
+            Northwest = new NorthwestIntermediateCardinal(),
+            Northeast = new NortheastIntermediateCardinal(),
+            Southwest = new SouthwestIntermediateCardinal(),
+            Southeast = new SoutheastIntermediateCardinal();
+
+        private IntermediateCardinal(byte id) : base(id)
+        {
+
+        }
+
+        private sealed class NorthwestIntermediateCardinal : IntermediateCardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => Southeast;
+
+            public NorthwestIntermediateCardinal() : base(12)
+            {
+                this.Name = nameof(Northwest);
+            }
+        }
+
+        private sealed class NortheastIntermediateCardinal : IntermediateCardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => Southwest;
+
+            public NortheastIntermediateCardinal() : base(13)
+            {
+                this.Name = nameof(Northeast);
+            }
+        }
+
+        private sealed class SouthwestIntermediateCardinal : IntermediateCardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => Northeast;
+
+            public SouthwestIntermediateCardinal() : base(14)
+            {
+                this.Name = nameof(Southwest);
+            }
+        }
+
+        private sealed class SoutheastIntermediateCardinal : IntermediateCardinal
+        {
+            public override string Name { get; }
+            public override Direction Inverse => Northeast;
+
+            public SoutheastIntermediateCardinal() : base(15)
+            {
+                this.Name = nameof(Southwest);
+            }
+        }
+    }
+
     public int CompareTo(Direction other) => other?.Id.CompareTo(this.Id) ?? -1;
     public bool Equals(Direction other) => other?.GetHashCode().Equals(this.GetHashCode()) ?? false;
     public override bool Equals(object obj) => (obj as Direction)?.Equals(this) ?? false;
@@ -221,6 +279,15 @@ public abstract partial class Direction
             Intercardinal.WestSouthwest
         };
 
+    public static readonly System.Collections.Generic.IReadOnlyList<Direction>
+        IntermediateCardinalDirections = new System.Collections.Generic.List<Direction>()
+        {
+            IntermediateCardinal.Northeast,
+            IntermediateCardinal.Northwest,
+            IntermediateCardinal.Southeast,
+            IntermediateCardinal.Southwest,
+        };
+
     /// <summary>
     ///     Starting with <see cref="Direction.Cardinal.North"/>, enumerates first to <see cref="Direction.Intercardinal.NorthNortheast"/>.
     /// </summary>
@@ -229,15 +296,19 @@ public abstract partial class Direction
     {
         yield return Cardinal.North;
         yield return Intercardinal.NorthNortheast;
+        yield return IntermediateCardinal.Northeast;
         yield return Intercardinal.EastNortheast;
         yield return Cardinal.East;
         yield return Intercardinal.EastSoutheast;
+        yield return IntermediateCardinal.Southeast;
         yield return Intercardinal.SouthSoutheast;
         yield return Cardinal.South;
         yield return Intercardinal.SouthSouthwest;
+        yield return IntermediateCardinal.Southwest;
         yield return Intercardinal.WestSouthwest;
         yield return Cardinal.West;
         yield return Intercardinal.WestNorthwest;
+        yield return IntermediateCardinal.Northwest;
         yield return Intercardinal.NorthNorthwest;
         yield return Cardinal.North;
     }
