@@ -1,28 +1,83 @@
 ﻿/// <summary>
 ///     Private class-constructor definitions are here because they are most important. Do not change these (yet).
 /// </summary>
-public abstract partial class Direction
+public abstract partial class Direction : System.IComparable<Direction>, System.IEquatable<Direction>
 {
-    private Direction()
-    {
+    protected byte Id { get; }
+    public abstract string Name { get; }
 
+    private Direction(byte id)
+    {
+        Id = id;
     }
 
-    private abstract partial class Cardinal
+    public abstract partial class Cardinal : Direction
     {
-        private Cardinal()
-        {
+        public static readonly Cardinal North, South, East, West;
 
+        static Cardinal()
+        {
+            North = new NorthCardinal();
+            South = new SouthCardinal();
+            East = new EastCardinal();
+            West = new WestCardinal();
+        }
+
+        private Cardinal(byte id) : base(id) { }
+
+        public sealed class NorthCardinal : Cardinal
+        {
+            public override string Name { get; } = nameof(North);
+            public NorthCardinal() : base(0) { }
+        }
+
+        public sealed class SouthCardinal : Cardinal
+        {
+            public override string Name { get; } = nameof(South);
+            public SouthCardinal() : base(1) { }
+        }
+
+        public sealed class EastCardinal : Cardinal
+        {
+            public override string Name { get; } = nameof(East);
+            public EastCardinal() : base(2) { }
+        }
+
+        public sealed class WestCardinal : Cardinal
+        {
+            public override string Name { get; } = nameof(West);
+            public WestCardinal() : base(3) { }
         }
     }
 
-    private abstract partial class Intercardinal
+    public abstract partial class Intercardinal : Direction
     {
-        private Intercardinal()
-        {
+        internal static readonly Intercardinal NorthNortheast, NorthNorthwest, SouthSoutheast, SouthSouthwest, EastNortheast, EastSoutheast, WestNorthwest, WestSouthwest;
 
+        static Intercardinal()
+        {
+            NorthNortheast = default(Intercardinal);
+            NorthNorthwest = default(Intercardinal);
+            SouthSoutheast = default(Intercardinal);
+            SouthSouthwest = default(Intercardinal);
+            EastNortheast = default(Intercardinal);
+            EastSoutheast = default(Intercardinal);
+            WestNorthwest = default(Intercardinal);
+            WestSouthwest = default(Intercardinal);
+        }
+
+        private Intercardinal(byte id) : base(id)
+        {
+            
         }
     }
+
+    public int CompareTo(Direction other) => other?.Id.CompareTo(this.Id) ?? -1;
+    public bool Equals(Direction other) => other?.GetHashCode().Equals(this.GetHashCode()) ?? false;
+    public override bool Equals(object obj) => (obj as Direction)?.Equals(this) ?? false;
+    public override int GetHashCode() => this.Id;
+    public static bool operator ==(Direction left, Direction right) => left != null && right != null && left.Equals(right);
+    public static bool operator !=(Direction left, Direction right) => !(left == right);
 }
 
 /// <summary>
@@ -30,6 +85,8 @@ public abstract partial class Direction
 /// </summary>
 public abstract partial class Direction
 {
+    public static Direction Default => Cardinal.North;
+
     public static readonly System.Collections.Generic.IReadOnlyList<Direction> 
         CardinalDirections = new System.Collections.Generic.List<Direction>()
         {
@@ -74,34 +131,4 @@ public abstract partial class Direction
     }
 
     public static System.Collections.Generic.IEnumerable<Direction> CycleCounterClockwise() => System.Linq.Enumerable.Reverse(CycleClockwise());
-
-    private abstract partial class Cardinal : Direction
-    {
-        internal static readonly Cardinal North, South, East, West;
-
-        static Cardinal()
-        {
-            North = default(Cardinal);
-            South = default(Cardinal);
-            East = default(Cardinal);
-            West = default(Cardinal);
-        }
-    }
-
-    private abstract partial class Intercardinal : Direction
-    {
-        internal static readonly Intercardinal NorthNortheast, NorthNorthwest, SouthSoutheast, SouthSouthwest, EastNortheast, EastSoutheast, WestNorthwest, WestSouthwest;
-
-        static Intercardinal()
-        {
-            NorthNortheast = default(Intercardinal);
-            NorthNorthwest = default(Intercardinal);
-            SouthSoutheast = default(Intercardinal);
-            SouthSouthwest = default(Intercardinal);
-            EastNortheast = default(Intercardinal);
-            EastSoutheast = default(Intercardinal);
-            WestNorthwest = default(Intercardinal);
-            WestSouthwest = default(Intercardinal);
-        }
-    }
 }
