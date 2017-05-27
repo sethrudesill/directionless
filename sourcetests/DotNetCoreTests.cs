@@ -21,6 +21,8 @@ namespace sourcetests
         [TestMethod]
         public void West_Is_Not_Null() => Assert.IsNotNull(Direction.Cardinal.West);
 
+        [TestMethod]
+        public void All_Directions_Are_Unique() => CollectionAssert.AllItemsAreUnique(Enumerable.Concat(Direction.CardinalDirections, Direction.IntercardinalDirections).ToArray(), "Duplicate(s) detected.");
 
         [TestMethod]
         public void Dot_Net_Framework_Compiles_Globally_NonNull_TypeSafeEnum_Enumerations()
@@ -29,7 +31,6 @@ namespace sourcetests
                 $"IReadonlyList {nameof(Direction.CardinalDirections)} contains null-pointer-reference(s).");
             CollectionAssert.AllItemsAreNotNull(Direction.IntercardinalDirections.ToArray(),
                 $"IReadonlyList {nameof(Direction.IntercardinalDirections)} contains null-pointer-reference(s).");
-
         }
     }
 }

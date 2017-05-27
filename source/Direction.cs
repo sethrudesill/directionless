@@ -13,40 +13,55 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
 
     public abstract partial class Cardinal : Direction
     {
-        public static readonly Cardinal North, South, East, West;
+        public static readonly Cardinal North = new NorthCardinal(), South = new SouthCardinal(), East = new EastCardinal(), West = new WestCardinal();
 
-        static Cardinal()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">Must be unique.</param>
+        private Cardinal(byte id) : base(id)
         {
-            North = new NorthCardinal();
-            South = new SouthCardinal();
-            East = new EastCardinal();
-            West = new WestCardinal();
-        }
 
-        private Cardinal(byte id) : base(id) { }
+        }
 
         public sealed class NorthCardinal : Cardinal
         {
-            public override string Name { get; } = nameof(North);
-            public NorthCardinal() : base(0) { }
+            public override string Name { get; }
+
+            public NorthCardinal() : base(0)
+            {
+                this.Name = nameof(North);
+            }
         }
 
         public sealed class SouthCardinal : Cardinal
         {
-            public override string Name { get; } = nameof(South);
-            public SouthCardinal() : base(1) { }
+            public override string Name { get; }
+
+            public SouthCardinal() : base(1)
+            {
+                this.Name = nameof(South);
+            }
         }
 
         public sealed class EastCardinal : Cardinal
         {
-            public override string Name { get; } = nameof(East);
-            public EastCardinal() : base(2) { }
+            public override string Name { get; }
+
+            public EastCardinal() : base(2)
+            {
+                this.Name = nameof(East);
+            }
         }
 
         public sealed class WestCardinal : Cardinal
         {
-            public override string Name { get; } = nameof(West);
-            public WestCardinal() : base(3) { }
+            public override string Name { get; }
+
+            public WestCardinal() : base(3)
+            {
+                this.Name = nameof(West);
+            }
         }
     }
 
@@ -68,7 +83,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
 
         private Intercardinal(byte id) : base(id)
         {
-            
+
         }
     }
 
@@ -87,7 +102,7 @@ public abstract partial class Direction
 {
     public static Direction Default => Cardinal.North;
 
-    public static readonly System.Collections.Generic.IReadOnlyList<Direction> 
+    public static readonly System.Collections.Generic.IReadOnlyList<Direction>
         CardinalDirections = new System.Collections.Generic.List<Direction>()
         {
             Cardinal.North,
@@ -96,7 +111,7 @@ public abstract partial class Direction
             Cardinal.West
         };
 
-    public static readonly System.Collections.Generic.IReadOnlyList<Direction> 
+    public static readonly System.Collections.Generic.IReadOnlyList<Direction>
         IntercardinalDirections = new System.Collections.Generic.List<Direction>()
         {
             Intercardinal.NorthNortheast,
