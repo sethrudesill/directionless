@@ -1,37 +1,115 @@
-﻿/// <summary>
-///     Private class-constructor definitions are here because they are most important. Do not change these (yet).
-/// </summary>
-[System.Diagnostics.DebuggerDisplay(nameof(Name))]
-public abstract partial class Direction : System.IComparable<Direction>, System.IEquatable<Direction>
+﻿[System.Diagnostics.DebuggerDisplay("Name", Name = "{Name} ({Id})")]
+public abstract class Direction : System.IComparable<Direction>, System.IEquatable<Direction>
 {
+    public static Direction Default => Cardinal.North;
+
+    public static readonly System.Collections.Generic.IEnumerable<Direction>
+        CardinalDirections = new System.Collections.Generic.List<Direction>()
+        {
+            Cardinal.North,
+            Cardinal.East,
+            Cardinal.South,
+            Cardinal.West
+        };
+
+    public static readonly System.Collections.Generic.IEnumerable<Direction>
+        IntercardinalDirections = new System.Collections.Generic.List<Direction>()
+        {
+            Intercardinal.NorthNortheast,
+            Intercardinal.NorthNorthwest,
+            Intercardinal.SouthSoutheast,
+            Intercardinal.SouthSouthwest,
+            Intercardinal.EastNortheast,
+            Intercardinal.EastSoutheast,
+            Intercardinal.WestNorthwest,
+            Intercardinal.WestSouthwest
+        };
+
+    public static readonly System.Collections.Generic.IEnumerable<Direction>
+        IntermediateCardinalDirections = new System.Collections.Generic.List<Direction>()
+        {
+            IntermediateCardinal.Northeast,
+            IntermediateCardinal.Northwest,
+            IntermediateCardinal.Southeast,
+            IntermediateCardinal.Southwest,
+        };
+
+    public static System.Collections.Generic.IEnumerable<Direction> CycleClockwise()
+    {
+        yield return Cardinal.North;
+        yield return Intercardinal.NorthNortheast;
+        yield return IntermediateCardinal.Northeast;
+        yield return Intercardinal.EastNortheast;
+        yield return Cardinal.East;
+        yield return Intercardinal.EastSoutheast;
+        yield return IntermediateCardinal.Southeast;
+        yield return Intercardinal.SouthSoutheast;
+        yield return Cardinal.South;
+        yield return Intercardinal.SouthSouthwest;
+        yield return IntermediateCardinal.Southwest;
+        yield return Intercardinal.WestSouthwest;
+        yield return Cardinal.West;
+        yield return Intercardinal.WestNorthwest;
+        yield return IntermediateCardinal.Northwest;
+        yield return Intercardinal.NorthNorthwest;
+        yield break;
+    }
+
+    public static System.Collections.Generic.IEnumerable<Direction> CycleCounterClockwise() 
+        => System.Linq.Enumerable.Reverse(CycleClockwise());
+
+    public static System.Collections.Generic.IEnumerable<Direction> RotateClockwise()
+    {
+        foreach (var direction in CycleClockwise())
+            yield return direction;
+
+        yield return System.Linq.Enumerable.First(CycleClockwise());
+    }
+
+    public static System.Collections.Generic.IEnumerable<Direction> RotateCounterClockwise()
+    {
+        foreach (var direction in CycleCounterClockwise())
+            yield return direction;
+
+        yield return System.Linq.Enumerable.First(CycleCounterClockwise());
+    }
+
     protected byte Id { get; }
     public abstract string Name { get; }
     public abstract Direction Inverse { get; }
 
     private Direction(byte id)
     {
-        Id = id;
+        this.Id = id;
     }
 
     public int CompareTo(Direction other) => other?.Id.CompareTo(this.Id) ?? -1;
-    public bool Equals(Direction other) => other?.GetHashCode().Equals(this.GetHashCode()) ?? false;
-    public override bool Equals(object obj) => (obj as Direction)?.Equals(this) ?? false;
-    public override int GetHashCode() => this.Id;
+    public bool Equals(Direction other) 
+        => other?.GetHashCode().Equals(this.GetHashCode()) ?? false;
 
-    public override string ToString() => Name;
+    public override bool Equals(object obj) 
+        => (obj as Direction)?.Equals(this) ?? false;
 
-    public abstract partial class Cardinal : Direction
+    public override int GetHashCode() 
+        => this.Id;
+
+    public override string ToString() 
+        => this.Name;
+
+    public static bool operator ==(Direction left, Direction right)
+        => left != null && right != null && left.Equals(right);
+
+    public static bool operator !=(Direction left, Direction right)
+        => !(left == right);
+
+    public abstract class Cardinal : Direction
     {
-        public static readonly Cardinal 
-            North = new NorthCardinal(), 
-            South = new SouthCardinal(), 
-            East = new EastCardinal(), 
+        public static readonly Cardinal
+            North = new NorthCardinal(),
+            South = new SouthCardinal(),
+            East = new EastCardinal(),
             West = new WestCardinal();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">Must be unique.</param>
         private Cardinal(byte id) : base(id)
         {
 
@@ -86,9 +164,9 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         }
     }
 
-    public abstract class Intercardinal : Direction
+    private abstract class Intercardinal : Direction
     {
-        internal static readonly Intercardinal
+        public static readonly Intercardinal
             NorthNortheast = new NorthNortheastIntercardinal(),
             NorthNorthwest = new NorthNorthwestIntercardinal(),
             SouthSoutheast = new SouthSoutheastIntercardinal(),
@@ -97,7 +175,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             EastSoutheast = new EastSoutheastIntercardinal(),
             WestNorthwest = new WestNorthwestIntercardinal(),
             WestSouthwest = new WestSouthwestIntercardinal();
-        
+
         private Intercardinal(byte id) : base(id)
         {
 
@@ -192,7 +270,7 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
         }
     }
 
-    public abstract class IntermediateCardinal : Direction
+    private abstract class IntermediateCardinal : Direction
     {
         public static readonly IntermediateCardinal
             Northwest = new NorthwestIntermediateCardinal(),
@@ -249,93 +327,4 @@ public abstract partial class Direction : System.IComparable<Direction>, System.
             }
         }
     }
-}
-
-/// <summary>
-///     Static symbol definitions.
-/// </summary>
-public abstract partial class Direction
-{
-    public static Direction Default => Cardinal.North;
-
-    public static readonly System.Collections.Generic.IReadOnlyList<Direction>
-        CardinalDirections = new System.Collections.Generic.List<Direction>()
-        {
-            Cardinal.North,
-            Cardinal.East,
-            Cardinal.South,
-            Cardinal.West
-        };
-
-    public static readonly System.Collections.Generic.IReadOnlyList<Direction>
-        IntercardinalDirections = new System.Collections.Generic.List<Direction>()
-        {
-            Intercardinal.NorthNortheast,
-            Intercardinal.NorthNorthwest,
-            Intercardinal.SouthSoutheast,
-            Intercardinal.SouthSouthwest,
-            Intercardinal.EastNortheast,
-            Intercardinal.EastSoutheast,
-            Intercardinal.WestNorthwest,
-            Intercardinal.WestSouthwest
-        };
-
-    public static readonly System.Collections.Generic.IReadOnlyList<Direction>
-        IntermediateCardinalDirections = new System.Collections.Generic.List<Direction>()
-        {
-            IntermediateCardinal.Northeast,
-            IntermediateCardinal.Northwest,
-            IntermediateCardinal.Southeast,
-            IntermediateCardinal.Southwest,
-        };
-
-    /// <summary>
-    ///     Starting with <see cref="Direction.Cardinal.North"/>, enumerates first to <see cref="Direction.Intercardinal.NorthNortheast"/>.
-    /// </summary>
-    /// <returns>A series of <see cref="Direction.Cardinal"/> and <see cref="Direction.Intercardinal"/> types.</returns>
-    public static System.Collections.Generic.IEnumerable<Direction> CycleClockwise()
-    {
-        yield return Cardinal.North;
-        yield return Intercardinal.NorthNortheast;
-        yield return IntermediateCardinal.Northeast;
-        yield return Intercardinal.EastNortheast;
-        yield return Cardinal.East;
-        yield return Intercardinal.EastSoutheast;
-        yield return IntermediateCardinal.Southeast;
-        yield return Intercardinal.SouthSoutheast;
-        yield return Cardinal.South;
-        yield return Intercardinal.SouthSouthwest;
-        yield return IntermediateCardinal.Southwest;
-        yield return Intercardinal.WestSouthwest;
-        yield return Cardinal.West;
-        yield return Intercardinal.WestNorthwest;
-        yield return IntermediateCardinal.Northwest;
-        yield return Intercardinal.NorthNorthwest;
-        yield break;
-    }
-
-    public static System.Collections.Generic.IEnumerable<Direction> CycleCounterClockwise() 
-        => System.Linq.Enumerable.Reverse(CycleClockwise());
-
-    public static System.Collections.Generic.IEnumerable<Direction> RotateClockwise()
-    {
-        foreach (var direction in CycleClockwise())
-            yield return direction;
-
-        yield return System.Linq.Enumerable.First(CycleClockwise());
-    }
-
-    public static System.Collections.Generic.IEnumerable<Direction> RotateCounterClockwise()
-    {
-        foreach (var direction in CycleCounterClockwise())
-            yield return direction;
-
-        yield return System.Linq.Enumerable.First(CycleCounterClockwise());
-    }
-
-    public static bool operator ==(Direction left, Direction right) 
-        => left != null && right != null && left.Equals(right);
-
-    public static bool operator !=(Direction left, Direction right) 
-        => !(left == right);
 }
