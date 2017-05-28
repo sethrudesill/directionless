@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using static Direction;
 
 namespace sourceperf
 {
@@ -99,7 +98,7 @@ namespace sourceperf
             Console.WriteLine("Enum Pattern");
             enumPatternStopwatch.Start();
             for (int i = 0; i < iterations; i++)
-                foreach (var direction in CycleClockwise())
+                foreach (var direction in Direction.CycleClockwise())
                     Console.WriteLine($"{direction} -> {direction.Inverse}");
 
             enumPatternStopwatch.Stop();
