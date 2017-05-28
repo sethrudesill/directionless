@@ -76,20 +76,18 @@ namespace sourceperf
         {
             TimeSpan durationForSystemEnum;
             TimeSpan durationForEnumPattern;
-            const int iterations = 10000;
+            const int iterations = 100000;
             Console.WriteLine("System.Enum");
             var sw = Stopwatch.StartNew();
             for (int i = 0; i < iterations; i++)
             {
                 foreach (var direction in AllDirectionTypes)
                 {
-                    var inverse = AllDirectionTypesInversed[direction];
-                    Console.WriteLine($"{direction} -> {inverse}");
+                    Console.WriteLine($"{direction} -> {AllDirectionTypesInversed[direction]}");
                 }
             }
             sw.Stop();
             durationForSystemEnum = sw.Elapsed;
-            
 
             Console.WriteLine("Enum Pattern");
             sw = Stopwatch.StartNew();
@@ -105,7 +103,6 @@ namespace sourceperf
             Console.Clear();
             Console.WriteLine("System.Enum took {0}", durationForSystemEnum);
             Console.WriteLine("Enum Pattern took {0}", durationForEnumPattern);
-
             Console.ReadKey();
         }
     }
