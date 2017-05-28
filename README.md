@@ -1,5 +1,5 @@
- directionless
-C# 7.1 and .NET Standard 2.0 cardinal & intercardinal [TypeSafeEnum](https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Type_Safe_Enum). The purpose is to demonstrate that treating System.Object as a compile-time-constant by restricting signature accessibility provides several benefits:
+# directionless
+C# 7.1 and .NET Standard 2.0 [cardinal & intercardinal](https://en.wikipedia.org/wiki/Cardinal_direction) [TypeSafeEnum](https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Type_Safe_Enum). The purpose is to demonstrate that treating System.Object as a compile-time-constant by restricting signature accessibility provides several benefits:
 
 1. Code that is safe. There is no implicit type-conversion between the protected, arbitrary "Id" value or integer
 2. Equality can be verified
