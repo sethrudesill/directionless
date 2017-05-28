@@ -9,7 +9,11 @@
     <Product>directionless</Product>
     <Description>.NET Core 2.0 cardinal &amp; intercardinal TypeSafeEnum written in C# 7.1.</Description>
     <Copyright>Copyright © Seth Rudesill 2017</Copyright>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
+    <PackageProjectUrl>https://github.com/sethrudesill/directionless</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/sethrudesill/directionless/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <RootNamespace>Direction</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

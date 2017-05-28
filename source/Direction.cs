@@ -1,5 +1,5 @@
-﻿using System;[System.Diagnostics.DebuggerDisplay("Name", Name = "{Name} ({Id})")]
-public abstract class Direction : System.IComparable<Direction>, System.IEquatable<Direction>, IEquatable<string>, IEquatable<byte>, IEquatable<int>
+﻿[System.Diagnostics.DebuggerDisplay("Name", Name = "{Name} ({Id})")]
+public abstract class Direction : System.IComparable<Direction>, System.IEquatable<Direction>, System.IEquatable<string>, System.IEquatable<byte>, System.IEquatable<int>
 {
     public static Direction Default => Cardinal.North;
 
@@ -89,7 +89,7 @@ public abstract class Direction : System.IComparable<Direction>, System.IEquatab
     public bool Equals(Direction other) 
         => other?.GetHashCode().Equals(this.GetHashCode()) ?? false;
 
-    public bool Equals(string name) => this.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
+    public bool Equals(string name) => this.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase);
     public bool Equals(byte other) => this.Id.Equals(other);
     public bool Equals(int other) => other.Equals(this.Id);
 

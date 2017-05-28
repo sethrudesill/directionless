@@ -100,9 +100,8 @@ namespace sourceperf
             enumPatternStopwatch.Start();
             for (int i = 0; i < iterations; i++)
                 foreach (var direction in CycleClockwise())
-                {
                     Console.WriteLine($"{direction} -> {direction.Inverse}");
-                }
+
             enumPatternStopwatch.Stop();
 
             Console.Clear();
