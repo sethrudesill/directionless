@@ -12,9 +12,10 @@ C# 7.1 and .NET Standard 2.0 [cardinal & intercardinal](https://en.wikipedia.org
 ## dotnetcore/dotnetstandard 2.0
 Performance increases can potentially be stretched further by implementations which aren't trading off the performance gains for the benefit of derived-classes used purely for categorization and sanity-checking at runtime. Here are the most recent results from version 2.0.1 after 1,000,000 iterations in a single-threaded, single-stack console application:
 
-* Casting/Parsing System.Enum took 00:03:56.8550442
-* Static Dictionary Lookups using System.Enum took 00:03:28.3953109
-* Enum Pattern took 00:03:05.3879664
+* Switch/Casting System.Enum took 00:13:54.7920955
+* Casting/Parsing System.Enum took 00:17:00.8266394
+* Static Dictionary Lookups using System.Enum took 00:14:53.4875283
+* Enum Pattern took 00:03:37.4088701
 
 ## dotnetframework 4.5
 For comparison's sake, I compiled a 'Release', non-optimized executable running 1,000,000 iterations and observed these results:
