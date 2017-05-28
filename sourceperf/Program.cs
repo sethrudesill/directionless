@@ -74,6 +74,7 @@ namespace sourceperf
         static void Main(string[] args)
         {
             const int iterations = 100000;
+            var results = new List<string>(iterations * 4);
             var castingSwitchStopwatch = new Stopwatch();
             var castingStopwatch = new Stopwatch();
             var staticDictionaryStopwatch = new Stopwatch();
@@ -90,52 +91,52 @@ namespace sourceperf
                     switch (t)
                     {
                         case DirectionTypes.North:
-                            Console.WriteLine($"{t} -> {DirectionTypes.South}");
+                            results.Add($"{t} -> {DirectionTypes.South}");
                             break;
                         case DirectionTypes.Northeast:
-                            Console.WriteLine($"{t} -> {DirectionTypes.Southwest}");
+                            results.Add($"{t} -> {DirectionTypes.Southwest}");
                             break;
                         case DirectionTypes.Northwest:
-                            Console.WriteLine($"{t} -> {DirectionTypes.Southeast}");
+                            results.Add($"{t} -> {DirectionTypes.Southeast}");
                             break;
                         case DirectionTypes.NorthNortheast:
-                            Console.WriteLine($"{t} -> {DirectionTypes.SouthSouthwest}");
+                            results.Add($"{t} -> {DirectionTypes.SouthSouthwest}");
                             break;
                         case DirectionTypes.NorthNorthwest:
-                            Console.WriteLine($"{t} -> {DirectionTypes.SouthSoutheast}");
+                            results.Add($"{t} -> {DirectionTypes.SouthSoutheast}");
                             break;
                         case DirectionTypes.South:
-                            Console.WriteLine($"{t} -> {DirectionTypes.North}");
+                            results.Add($"{t} -> {DirectionTypes.North}");
                             break;
                         case DirectionTypes.Southeast:
-                            Console.WriteLine($"{t} -> {DirectionTypes.Northwest}");
+                            results.Add($"{t} -> {DirectionTypes.Northwest}");
                             break;
                         case DirectionTypes.Southwest:
-                            Console.WriteLine($"{t} -> {DirectionTypes.Northeast}");
+                            results.Add($"{t} -> {DirectionTypes.Northeast}");
                             break;
                         case DirectionTypes.SouthSoutheast:
-                            Console.WriteLine($"{t} -> {DirectionTypes.NorthNorthwest}");
+                            results.Add($"{t} -> {DirectionTypes.NorthNorthwest}");
                             break;
                         case DirectionTypes.SouthSouthwest:
-                            Console.WriteLine($"{t} -> {DirectionTypes.NorthNortheast}");
+                            results.Add($"{t} -> {DirectionTypes.NorthNortheast}");
                             break;
                         case DirectionTypes.EastNortheast:
-                            Console.WriteLine($"{t} -> {DirectionTypes.WestNorthwest}");
+                            results.Add($"{t} -> {DirectionTypes.WestNorthwest}");
                             break;
                         case DirectionTypes.EastSoutheast:
-                            Console.WriteLine($"{t} -> {DirectionTypes.WestSouthwest}");
+                            results.Add($"{t} -> {DirectionTypes.WestSouthwest}");
                             break;
                         case DirectionTypes.WestNorthwest:
-                            Console.WriteLine($"{t} -> {DirectionTypes.EastSoutheast}");
+                            results.Add($"{t} -> {DirectionTypes.EastSoutheast}");
                             break;
                         case DirectionTypes.WestSouthwest:
-                            Console.WriteLine($"{t} -> {DirectionTypes.EastNortheast}");
+                            results.Add($"{t} -> {DirectionTypes.EastNortheast}");
                             break;
                         case DirectionTypes.East:
-                            Console.WriteLine($"{t} -> {DirectionTypes.West}");
+                            results.Add($"{t} -> {DirectionTypes.West}");
                             break;
                         case DirectionTypes.West:
-                            Console.WriteLine($"{t} -> {DirectionTypes.East}");
+                            results.Add($"{t} -> {DirectionTypes.East}");
                             break;
                     }
                 }
@@ -146,7 +147,7 @@ namespace sourceperf
             castingStopwatch.Start();
             for (int i = 0; i < iterations; i++)
                 foreach (var name in names)
-                    Console.WriteLine($"{name} -> {AllDirectionTypesInversed[(DirectionTypes)Enum.Parse(typeof(DirectionTypes), name)]}");
+                    results.Add($"{name} -> {AllDirectionTypesInversed[(DirectionTypes)Enum.Parse(typeof(DirectionTypes), name)]}");
 
             castingStopwatch.Stop();
 
@@ -154,7 +155,7 @@ namespace sourceperf
             staticDictionaryStopwatch.Start();
             for (int i = 0; i < iterations; i++)
                 foreach (var direction in AllDirectionTypes)
-                    Console.WriteLine($"{direction} -> {AllDirectionTypesInversed[direction]}");
+                    results.Add($"{direction} -> {AllDirectionTypesInversed[direction]}");
 
             staticDictionaryStopwatch.Stop();
 
@@ -162,7 +163,7 @@ namespace sourceperf
             enumPatternStopwatch.Start();
             for (int i = 0; i < iterations; i++)
                 foreach (var direction in Direction.CycleClockwise())
-                    Console.WriteLine($"{direction} -> {direction.Inverse}");
+                    results.Add($"{direction} -> {direction.Inverse}");
 
             enumPatternStopwatch.Stop();
 
@@ -171,6 +172,7 @@ namespace sourceperf
             Console.WriteLine("Casting/Parsing System.Enum took {0}", castingStopwatch.Elapsed);
             Console.WriteLine("Static Dictionary Lookups using System.Enum took {0}", staticDictionaryStopwatch.Elapsed);
             Console.WriteLine("Enum Pattern took {0}", enumPatternStopwatch.Elapsed);
+            results.Clear();
             Console.ReadKey();
         }
     }
