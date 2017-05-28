@@ -73,7 +73,7 @@ namespace sourceperf
 
         static void Main(string[] args)
         {
-            const int iterations = 10000;
+            const int iterations = 100000;
             var castingSwitchStopwatch = new Stopwatch();
             var castingStopwatch = new Stopwatch();
             var staticDictionaryStopwatch = new Stopwatch();

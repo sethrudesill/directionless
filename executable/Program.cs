@@ -71,13 +71,12 @@ class Program
 
     static void Main(string[] args)
     {
-        const int iterations = 10000;
+        const int iterations = 1000000;
         var castingSwitchStopwatch = new Stopwatch();
         var castingStopwatch = new Stopwatch();
         var staticDictionaryStopwatch = new Stopwatch();
         var enumPatternStopwatch = new Stopwatch();
         var names = Enum.GetNames(typeof(DirectionTypes));
-
         Console.WriteLine("Switch/Casting System.Enum");
         castingSwitchStopwatch.Start();
 
@@ -249,14 +248,9 @@ public abstract class Direction : System.IComparable<Direction>, System.IEquatab
         yield return System.Linq.Enumerable.First(CycleCounterClockwise());
     }
 
-    protected byte Id { get; }
+    protected abstract byte Id { get; }
     public abstract string Name { get; }
     public abstract Direction Inverse { get; }
-
-    private Direction(byte id)
-    {
-        this.Id = id;
-    }
 
     public int CompareTo(Direction other)
         => other?.Id.CompareTo(this.Id) ?? -1;
@@ -290,221 +284,126 @@ public abstract class Direction : System.IComparable<Direction>, System.IEquatab
             East = new EastCardinal(),
             West = new WestCardinal();
 
-        private Cardinal(byte id) : base(id)
-        {
-
-        }
-
         private sealed class NorthCardinal : Cardinal
         {
-            public override string Name { get; }
-
+            protected override byte Id { get; } = 0;
+            public override string Name { get; } = nameof(North);
             public override Direction Inverse => South;
-
-            public NorthCardinal() : base(0)
-            {
-                this.Name = nameof(North);
-            }
         }
 
         private sealed class SouthCardinal : Cardinal
         {
-            public override string Name { get; }
-
+            protected override byte Id { get; } = 1;
+            public override string Name { get; } = nameof(South);
             public override Direction Inverse => North;
-
-            public SouthCardinal() : base(1)
-            {
-                this.Name = nameof(South);
-            }
         }
 
         private sealed class EastCardinal : Cardinal
         {
-            public override string Name { get; }
-
+            protected override byte Id { get; } = 2;
+            public override string Name { get; } = nameof(East);
             public override Direction Inverse => West;
-
-            public EastCardinal() : base(2)
-            {
-                this.Name = nameof(East);
-            }
         }
 
         private sealed class WestCardinal : Cardinal
         {
-            public override string Name { get; }
-
+            protected override byte Id { get; } = 3;
+            public override string Name { get; } = nameof(West);
             public override Direction Inverse => East;
-
-            public WestCardinal() : base(3)
-            {
-                this.Name = nameof(West);
-            }
         }
     }
 
-    private abstract class Intercardinal : Direction
+    public abstract class Intercardinal : Direction
     {
-        public static readonly Intercardinal
-            NorthNortheast = new NorthNortheastIntercardinal(),
-            NorthNorthwest = new NorthNorthwestIntercardinal(),
-            SouthSoutheast = new SouthSoutheastIntercardinal(),
-            SouthSouthwest = new SouthSouthwestIntercardinal(),
-            EastNortheast = new EastNortheastIntercardinal(),
-            EastSoutheast = new EastSoutheastIntercardinal(),
-            WestNorthwest = new WestNorthwestIntercardinal(),
-            WestSouthwest = new WestSouthwestIntercardinal();
-
-        private Intercardinal(byte id) : base(id)
-        {
-
-        }
+        public static readonly Intercardinal NorthNortheast = new NorthNortheastIntercardinal(), NorthNorthwest = new NorthNorthwestIntercardinal(), SouthSoutheast = new SouthSoutheastIntercardinal(), SouthSouthwest = new SouthSouthwestIntercardinal(), EastNortheast = new EastNortheastIntercardinal(), EastSoutheast = new EastSoutheastIntercardinal(), WestNorthwest = new WestNorthwestIntercardinal(), WestSouthwest = new WestSouthwestIntercardinal();
 
         private sealed class NorthNortheastIntercardinal : Intercardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 4;
+            public override string Name { get; } = nameof(NorthNortheast);
             public override Direction Inverse => SouthSouthwest;
-
-            public NorthNortheastIntercardinal() : base(4)
-            {
-                this.Name = nameof(NorthNortheast);
-            }
         }
 
         private sealed class NorthNorthwestIntercardinal : Intercardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 5;
+            public override string Name { get; } = nameof(NorthNorthwest);
             public override Direction Inverse => SouthSoutheast;
-
-            public NorthNorthwestIntercardinal() : base(5)
-            {
-                this.Name = nameof(NorthNorthwest);
-            }
         }
 
         private sealed class SouthSoutheastIntercardinal : Intercardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 6;
+            public override string Name { get; } = nameof(SouthSoutheast);
             public override Direction Inverse => NorthNorthwest;
-
-            public SouthSoutheastIntercardinal() : base(6)
-            {
-                this.Name = nameof(SouthSoutheast);
-            }
         }
 
         private sealed class SouthSouthwestIntercardinal : Intercardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 7;
+            public override string Name { get; } = nameof(SouthSouthwest);
             public override Direction Inverse => NorthNortheast;
-
-            public SouthSouthwestIntercardinal() : base(7)
-            {
-                this.Name = nameof(SouthSouthwest);
-            }
         }
 
         private sealed class EastNortheastIntercardinal : Intercardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 8;
+            public override string Name { get; } = nameof(EastNortheast);
             public override Direction Inverse => WestSouthwest;
-
-            public EastNortheastIntercardinal() : base(8)
-            {
-                this.Name = nameof(EastNortheast);
-            }
         }
 
         private sealed class EastSoutheastIntercardinal : Intercardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 9;
+            public override string Name { get; } = nameof(EastSoutheast);
             public override Direction Inverse => WestNorthwest;
-
-            public EastSoutheastIntercardinal() : base(9)
-            {
-                this.Name = nameof(EastSoutheast);
-            }
         }
 
         private sealed class WestSouthwestIntercardinal : Intercardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 10;
+            public override string Name { get; } = nameof(WestSouthwest);
             public override Direction Inverse => EastNortheast;
-
-            public WestSouthwestIntercardinal() : base(10)
-            {
-                this.Name = nameof(WestSouthwest);
-            }
         }
 
         private sealed class WestNorthwestIntercardinal : Intercardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 11;
+            public override string Name { get; } = nameof(WestNorthwest);
             public override Direction Inverse => EastSoutheast;
-
-            public WestNorthwestIntercardinal() : base(11)
-            {
-                this.Name = nameof(WestNorthwest);
-            }
         }
     }
 
-    private abstract class IntermediateCardinal : Direction
+    public abstract class IntermediateCardinal : Direction
     {
-        public static readonly IntermediateCardinal
-            Northwest = new NorthwestIntermediateCardinal(),
-            Northeast = new NortheastIntermediateCardinal(),
-            Southwest = new SouthwestIntermediateCardinal(),
-            Southeast = new SoutheastIntermediateCardinal();
-
-        private IntermediateCardinal(byte id) : base(id)
-        {
-
-        }
+        public static readonly IntermediateCardinal Northwest = new NorthwestIntermediateCardinal(), Northeast = new NortheastIntermediateCardinal(), Southwest = new SouthwestIntermediateCardinal(), Southeast = new SoutheastIntermediateCardinal();
 
         private sealed class NorthwestIntermediateCardinal : IntermediateCardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 12;
+            public override string Name { get; } = nameof(Northwest);
             public override Direction Inverse => Southeast;
-
-            public NorthwestIntermediateCardinal() : base(12)
-            {
-                this.Name = nameof(Northwest);
-            }
         }
 
         private sealed class NortheastIntermediateCardinal : IntermediateCardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 13;
+            public override string Name { get; } = nameof(Northeast);
             public override Direction Inverse => Southwest;
-
-            public NortheastIntermediateCardinal() : base(13)
-            {
-                this.Name = nameof(Northeast);
-            }
         }
 
         private sealed class SouthwestIntermediateCardinal : IntermediateCardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 14;
+            public override string Name { get; } = nameof(Southwest);
             public override Direction Inverse => Northeast;
-
-            public SouthwestIntermediateCardinal() : base(14)
-            {
-                this.Name = nameof(Southwest);
-            }
         }
 
         private sealed class SoutheastIntermediateCardinal : IntermediateCardinal
         {
-            public override string Name { get; }
+            protected override byte Id { get; } = 15;
+            public override string Name { get; } = nameof(Southeast);
             public override Direction Inverse => Northwest;
-
-            public SoutheastIntermediateCardinal() : base(15)
-            {
-                this.Name = nameof(Southeast);
-            }
         }
     }
 }
