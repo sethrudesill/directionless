@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "source", "source\source.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sourcetests", "sourcetests\sourcetests.csproj", "{3C98D8BB-DDEC-4969-B9BF-422DD0013122}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sourceperf", "sourceperf\sourceperf.csproj", "{56077E36-FB42-4EE4-95EE-57E0534EF4D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3C98D8BB-DDEC-4969-B9BF-422DD0013122}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C98D8BB-DDEC-4969-B9BF-422DD0013122}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C98D8BB-DDEC-4969-B9BF-422DD0013122}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56077E36-FB42-4EE4-95EE-57E0534EF4D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56077E36-FB42-4EE4-95EE-57E0534EF4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56077E36-FB42-4EE4-95EE-57E0534EF4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56077E36-FB42-4EE4-95EE-57E0534EF4D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
