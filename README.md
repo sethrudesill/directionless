@@ -22,3 +22,9 @@ After introducing the Casting/Enum.Parse technique, a run of 1,000 iterations yi
 * Casting/Parsing System.Enum took 00:00:03.8663930
 * Static Dictionary Lookups using System.Enum took 00:00:01.7100201
 * Enum Pattern took 00:00:01.7009765
+
+1,000,000 iterations yields:
+
+* Casting/Parsing System.Enum took 00:03:56.8550442
+* Static Dictionary Lookups using System.Enum took 00:03:28.3953109
+* Enum Pattern took 00:03:05.3879664
