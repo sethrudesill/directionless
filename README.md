@@ -18,3 +18,5 @@ Import the nuget package, build your own dll, or reference the library directly.
 
 # maintenance
 I will add more scientific analysis of the runtime performance such as garbage collection behavior in a managed runtime when the currently private sealed concrete types are exposed public (while still having a private constructor) and C# 7.0+ pattern-matching type-switching is utilized.
+
+![alt text](https://raw.githubusercontent.com/sethrudesill/directionless/blob/master/directionless-type-dependency-diagram.png)
