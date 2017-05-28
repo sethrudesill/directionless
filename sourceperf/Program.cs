@@ -74,35 +74,41 @@ namespace sourceperf
 
         static void Main(string[] args)
         {
-            TimeSpan durationForSystemEnum;
-            TimeSpan durationForEnumPattern;
             const int iterations = 100000;
-            Console.WriteLine("System.Enum");
-            var sw = Stopwatch.StartNew();
+            var castingStopwatch = new Stopwatch();
+            var staticDictionaryStopwatch = new Stopwatch();
+            var enumPatternStopwatch = new Stopwatch();
+
+            Console.WriteLine("Casting System.Enum");
+            castingStopwatch.Start();
+            var names = Enum.GetNames(typeof(DirectionTypes));
             for (int i = 0; i < iterations; i++)
-            {
+                foreach (var name in names)
+                    Console.WriteLine($"{name} -> {AllDirectionTypesInversed[(DirectionTypes)Enum.Parse(typeof(DirectionTypes), name)]}");
+
+            castingStopwatch.Stop();
+
+            Console.WriteLine("System.Enum");
+            staticDictionaryStopwatch.Start();
+            for (int i = 0; i < iterations; i++)
                 foreach (var direction in AllDirectionTypes)
-                {
                     Console.WriteLine($"{direction} -> {AllDirectionTypesInversed[direction]}");
-                }
-            }
-            sw.Stop();
-            durationForSystemEnum = sw.Elapsed;
+
+            staticDictionaryStopwatch.Stop();
 
             Console.WriteLine("Enum Pattern");
-            sw = Stopwatch.StartNew();
+            castingStopwatch = Stopwatch.StartNew();
             for (int i = 0; i < iterations; i++)
-            {
                 foreach (var direction in CycleClockwise())
                 {
                     Console.WriteLine($"{direction} -> {direction.Inverse}");
                 }
-            }
-            sw.Stop();
-            durationForEnumPattern = sw.Elapsed;
+            enumPatternStopwatch.Stop();
+
             Console.Clear();
-            Console.WriteLine("System.Enum took {0}", durationForSystemEnum);
-            Console.WriteLine("Enum Pattern took {0}", durationForEnumPattern);
+            Console.WriteLine("Casting/Parsing System.Enum took {0}", castingStopwatch.Elapsed);
+            Console.WriteLine("Static Dictionary Lookups using System.Enum took {0}", staticDictionaryStopwatch.Elapsed);
+            Console.WriteLine("Enum Pattern took {0}", enumPatternStopwatch.Elapsed);
             Console.ReadKey();
         }
     }
