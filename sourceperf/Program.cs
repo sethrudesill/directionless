@@ -47,6 +47,8 @@ namespace sourceperf
                 DirectionTypes.EastSoutheast,
                 DirectionTypes.WestSouthwest,
                 DirectionTypes.WestNorthwest,
+                DirectionTypes.East,
+                DirectionTypes.West
             };
 
             AllDirectionTypesInversed = new Dictionary<DirectionTypes, DirectionTypes>()
@@ -103,6 +105,7 @@ namespace sourceperf
             Console.Clear();
             Console.WriteLine("System.Enum took {0}", durationForSystemEnum);
             Console.WriteLine("Enum Pattern took {0}", durationForEnumPattern);
+
             Console.ReadKey();
         }
     }
