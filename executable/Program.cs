@@ -71,14 +71,77 @@ class Program
 
     static void Main(string[] args)
     {
-        const int iterations = 1000000;
+        const int iterations = 10000;
+        var castingSwitchStopwatch = new Stopwatch();
         var castingStopwatch = new Stopwatch();
         var staticDictionaryStopwatch = new Stopwatch();
         var enumPatternStopwatch = new Stopwatch();
+        var names = Enum.GetNames(typeof(DirectionTypes));
+
+        Console.WriteLine("Switch/Casting System.Enum");
+        castingSwitchStopwatch.Start();
+
+        for (int i = 0; i < iterations; i++)
+            foreach (var name in names)
+            {
+                var t = (DirectionTypes)Enum.Parse(typeof(DirectionTypes), name);
+                switch (t)
+                {
+                    case DirectionTypes.North:
+                        Console.WriteLine($"{t} -> {DirectionTypes.South}");
+                        break;
+                    case DirectionTypes.Northeast:
+                        Console.WriteLine($"{t} -> {DirectionTypes.Southwest}");
+                        break;
+                    case DirectionTypes.Northwest:
+                        Console.WriteLine($"{t} -> {DirectionTypes.Southeast}");
+                        break;
+                    case DirectionTypes.NorthNortheast:
+                        Console.WriteLine($"{t} -> {DirectionTypes.SouthSouthwest}");
+                        break;
+                    case DirectionTypes.NorthNorthwest:
+                        Console.WriteLine($"{t} -> {DirectionTypes.SouthSoutheast}");
+                        break;
+                    case DirectionTypes.South:
+                        Console.WriteLine($"{t} -> {DirectionTypes.North}");
+                        break;
+                    case DirectionTypes.Southeast:
+                        Console.WriteLine($"{t} -> {DirectionTypes.Northwest}");
+                        break;
+                    case DirectionTypes.Southwest:
+                        Console.WriteLine($"{t} -> {DirectionTypes.Northeast}");
+                        break;
+                    case DirectionTypes.SouthSoutheast:
+                        Console.WriteLine($"{t} -> {DirectionTypes.NorthNorthwest}");
+                        break;
+                    case DirectionTypes.SouthSouthwest:
+                        Console.WriteLine($"{t} -> {DirectionTypes.NorthNortheast}");
+                        break;
+                    case DirectionTypes.EastNortheast:
+                        Console.WriteLine($"{t} -> {DirectionTypes.WestNorthwest}");
+                        break;
+                    case DirectionTypes.EastSoutheast:
+                        Console.WriteLine($"{t} -> {DirectionTypes.WestSouthwest}");
+                        break;
+                    case DirectionTypes.WestNorthwest:
+                        Console.WriteLine($"{t} -> {DirectionTypes.EastSoutheast}");
+                        break;
+                    case DirectionTypes.WestSouthwest:
+                        Console.WriteLine($"{t} -> {DirectionTypes.EastNortheast}");
+                        break;
+                    case DirectionTypes.East:
+                        Console.WriteLine($"{t} -> {DirectionTypes.West}");
+                        break;
+                    case DirectionTypes.West:
+                        Console.WriteLine($"{t} -> {DirectionTypes.East}");
+                        break;
+                }
+            }
+
+        castingSwitchStopwatch.Stop();
 
         Console.WriteLine("Casting System.Enum");
         castingStopwatch.Start();
-        var names = Enum.GetNames(typeof(DirectionTypes));
         for (int i = 0; i < iterations; i++)
             foreach (var name in names)
                 Console.WriteLine($"{name} -> {AllDirectionTypesInversed[(DirectionTypes)Enum.Parse(typeof(DirectionTypes), name)]}");
@@ -102,6 +165,7 @@ class Program
         enumPatternStopwatch.Stop();
 
         Console.Clear();
+        Console.WriteLine("Switch/Casting System.Enum took {0}", castingSwitchStopwatch.Elapsed);
         Console.WriteLine("Casting/Parsing System.Enum took {0}", castingStopwatch.Elapsed);
         Console.WriteLine("Static Dictionary Lookups using System.Enum took {0}", staticDictionaryStopwatch.Elapsed);
         Console.WriteLine("Enum Pattern took {0}", enumPatternStopwatch.Elapsed);

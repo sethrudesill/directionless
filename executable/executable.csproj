@@ -26,7 +26,7 @@
     <PublisherName>Seth Rudesill</PublisherName>
     <SuiteName>directionless</SuiteName>
     <DisallowUrlActivation>true</DisallowUrlActivation>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
