@@ -74,7 +74,7 @@ namespace sourceperf
 
         static void Main(string[] args)
         {
-            const int iterations = 100000;
+            const int iterations = 1000;
             var castingStopwatch = new Stopwatch();
             var staticDictionaryStopwatch = new Stopwatch();
             var enumPatternStopwatch = new Stopwatch();
@@ -97,7 +97,7 @@ namespace sourceperf
             staticDictionaryStopwatch.Stop();
 
             Console.WriteLine("Enum Pattern");
-            castingStopwatch = Stopwatch.StartNew();
+            enumPatternStopwatch.Start();
             for (int i = 0; i < iterations; i++)
                 foreach (var direction in CycleClockwise())
                 {
