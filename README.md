@@ -3,7 +3,7 @@ C# 7.1 and .NET Standard 2.0 cardinal & intercardinal TypeSafeEnum. The purpose 
 
 1. Code that is safe. There is no implicit type-conversion between the protected, arbitrary "Id" value or integer
 2. Equality can be verified
-3. Switch statements with dangling / obsolete / neglected cases are not impossible
+3. Switch statements with dangling / obsolete / neglected cases are "impossible"
 4. Psuedo-mutability, extensibility, and avoidance of runtime errors related to improper use of System.Enum are attainable with other design patterns such as Facade, Singleton, Decorator, Component, and Builder patterns.
 
 ![directionless](https://github.com/sethrudesill/directionless/blob/master/directionless-type-dependency-diagram.png)
