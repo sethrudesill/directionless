@@ -1,4 +1,4 @@
-1# directionless
+# directionless
 ## executive summary
 
 My purpose is to demonstrate that putting in the upfront-effort of designing a finite, closed, categorization system using .NET's System.Object Reference Type as a compile-time-constant has significant performance benefits and code-composition clarity over the conventional usage of System.Enum (excluding use-cases for the [Flags] attribute). The initial implementation of this project was published shortly before the C# designers announced a proposal for "read-only-reference-types" which you can [learn more about on an InfoQ article published June 7th by John Allen](https://www.infoq.com/news/2017/06/CSharp-7.2).
