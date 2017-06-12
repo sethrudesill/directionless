@@ -9,6 +9,8 @@ By encapsulating initialization details as private, only extension-of and not mu
 
 ![directionless](https://github.com/sethrudesill/directionless/blob/master/directionless-type-dependency-diagram.png)
 
+![directionless](https://github.com/sethrudesill/directionless/blob/master/directionless-code-map.png)
+
 ## usage
 Import the nuget package, build your own dll, or reference the library directly. Once referenced, there is no namespace. Use Direction.CycleClockwise() to enumerate all of the cardinal, intercardinal, and intermediate cardinal directions. 
 
