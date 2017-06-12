@@ -4,6 +4,12 @@ using System.Diagnostics;
 
 class Program
 {
+    const int iterations = 100000;
+    private static readonly List<string> results = new List<string>(iterations * 4);
+    private static readonly Stopwatch castingSwitchStopwatch = new Stopwatch();
+    private static readonly Stopwatch castingStopwatch = new Stopwatch();
+    private static readonly Stopwatch staticDictionaryStopwatch = new Stopwatch();
+    private static readonly Stopwatch enumPatternStopwatch = new Stopwatch();
     private static readonly DirectionTypes[] AllDirectionTypes;
     private static readonly Dictionary<DirectionTypes, DirectionTypes> AllDirectionTypesInversed;
     private enum DirectionTypes
@@ -71,15 +77,10 @@ class Program
 
     static void Main(string[] args)
     {
-        const int iterations = 100000;
-        var results = new List<string>(iterations * 4);
-        var castingSwitchStopwatch = new Stopwatch();
-        var castingStopwatch = new Stopwatch();
-        var staticDictionaryStopwatch = new Stopwatch();
-        var enumPatternStopwatch = new Stopwatch();
+        Console.WriteLine("Please wait...");
+
         var names = Enum.GetNames(typeof(DirectionTypes));
 
-        Console.WriteLine("Switch/Casting System.Enum");
         castingSwitchStopwatch.Start();
 
         for (int i = 0; i < iterations; i++)
@@ -141,24 +142,24 @@ class Program
 
         castingSwitchStopwatch.Stop();
 
-        Console.WriteLine("Casting System.Enum");
         castingStopwatch.Start();
+
         for (int i = 0; i < iterations; i++)
             foreach (var name in names)
                 results.Add($"{name} -> {AllDirectionTypesInversed[(DirectionTypes)Enum.Parse(typeof(DirectionTypes), name)]}");
 
         castingStopwatch.Stop();
 
-        Console.WriteLine("System.Enum");
         staticDictionaryStopwatch.Start();
+
         for (int i = 0; i < iterations; i++)
             foreach (var direction in AllDirectionTypes)
                 results.Add($"{direction} -> {AllDirectionTypesInversed[direction]}");
 
         staticDictionaryStopwatch.Stop();
 
-        Console.WriteLine("Enum Pattern");
         enumPatternStopwatch.Start();
+
         for (int i = 0; i < iterations; i++)
             foreach (var direction in Direction.CycleClockwise())
                 results.Add($"{direction} -> {direction.Inverse}");
@@ -166,11 +167,11 @@ class Program
         enumPatternStopwatch.Stop();
 
         Console.Clear();
-        Console.WriteLine("Switch/Casting System.Enum took {0}", castingSwitchStopwatch.Elapsed);
-        Console.WriteLine("Casting/Parsing System.Enum took {0}", castingStopwatch.Elapsed);
-        Console.WriteLine("Static Dictionary Lookups using System.Enum took {0}", staticDictionaryStopwatch.Elapsed);
-        Console.WriteLine("Enum Pattern took {0}", enumPatternStopwatch.Elapsed);
-        results.Clear();
+        Console.WriteLine("Inversion Matching Results{0}{1}{0}", Environment.NewLine, new string('_', 60));
+        Console.WriteLine("{0} | Casting Switch", castingSwitchStopwatch.Elapsed);
+        Console.WriteLine("{0} | Parse Casting", castingStopwatch.Elapsed);
+        Console.WriteLine("{0} | Dictionary Lookup", staticDictionaryStopwatch.Elapsed);
+        Console.WriteLine("{0} | Strongly Typed Enum Read-Only Reference Type", enumPatternStopwatch.Elapsed);
         Console.ReadKey();
     }
 }

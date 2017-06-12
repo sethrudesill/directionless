@@ -9,6 +9,8 @@ By encapsulating initialization details as private, only extension-of and not mu
 
 ![directionless](https://github.com/sethrudesill/directionless/blob/master/directionless-type-dependency-diagram.png)
 
+![directionless](https://github.com/sethrudesill/directionless/blob/master/directionless-code-map.png)
+
 ## usage
 Import the nuget package, build your own dll, or reference the library directly. Once referenced, there is no namespace. Use Direction.CycleClockwise() to enumerate all of the cardinal, intercardinal, and intermediate cardinal directions. 
 
@@ -21,16 +23,11 @@ I will add more scientific analysis of the runtime performance such as garbage c
 
 # performance metrics (naive)
 ## dotnetcore/dotnetstandard 2.0
-Performance increases can potentially be stretched further by implementations which aren't trading off the performance gains for the benefit of derived-classes used purely for categorization and sanity-checking at runtime. Here are the most recent results from version 2.0.1 after 1,000,000 iterations in a single-threaded, single-stack console application:
-
-* Switch/Casting System.Enum took 00:13:54.7920955
-* Casting/Parsing System.Enum took 00:17:00.8266394
-* Static Dictionary Lookups using System.Enum took 00:14:53.4875283
-* Enum Pattern took 00:03:37.4088701
+Version 3.0.0 results from 1,000,000 iterations
+00:00:06.4303034 | Casting Switch
+00:00:05.2790896 | Parse Casting
+00:00:03.0351476 | Dictionary Lookup
+00:00:01.4391368 | Strongly Typed Enum Read-Only Reference Type
 
 ## dotnetframework 4.5
-For comparison's sake, I compiled a 'Release', non-optimized executable running 1,000,000 iterations and observed these results:
-
-* Casting/Parsing System.Enum took 00:06:29.8809348
-* Static Dictionary Lookups using System.Enum took 00:04:09.8360970
-* Enum Pattern took 00:03:37.8053674
+Who cares?
