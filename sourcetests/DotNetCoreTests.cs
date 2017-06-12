@@ -10,51 +10,47 @@ namespace sourcetests
     public class DotNetCoreTests
     {
         [TestMethod]
-        public void North_Is_Not_Null() 
-            => Assert.IsNotNull(Direction.Cardinal.North);
+        public void North_Is_Not_Null() => Assert.IsNotNull(Direction.Cardinal.North);
 
         [TestMethod]
-        public void East_Is_Not_Null() 
-            => Assert.IsNotNull(Direction.Cardinal.East);
+        public void East_Is_Not_Null() => Assert.IsNotNull(Direction.Cardinal.East);
 
         [TestMethod]
-        public void South_Is_Not_Null() 
-            => Assert.IsNotNull(Direction.Cardinal.South);
+        public void South_Is_Not_Null() => Assert.IsNotNull(Direction.Cardinal.South);
 
         [TestMethod]
-        public void West_Is_Not_Null() 
-            => Assert.IsNotNull(Direction.Cardinal.West);
+        public void West_Is_Not_Null() => Assert.IsNotNull(Direction.Cardinal.West);
 
         [TestMethod]
-        public void North_Is_Opposite_South() 
+        public void North_Is_Opposite_South()
             => Assert.IsTrue(Direction.Cardinal.North.Inverse.Equals(Direction.Cardinal.South) && Direction.Cardinal.South.Inverse.Equals(Direction.Cardinal.North));
 
         [TestMethod]
-        public void East_Is_Opposite_West() 
+        public void East_Is_Opposite_West()
             => Assert.IsTrue(Direction.Cardinal.East.Inverse.Equals(Direction.Cardinal.West) && Direction.Cardinal.West.Inverse.Equals(Direction.Cardinal.East));
 
         [TestMethod]
-        public void All_Directions_Are_Unique() 
-            => CollectionAssert.AllItemsAreUnique(Enumerable.Concat(Direction.CardinalDirections.ToArray(), Direction.IntercardinalDirections.ToArray()).Concat(Direction.IntermediateCardinalDirections.ToArray()).ToArray(), "Duplicate(s) detected.");
+        public void All_Directions_Are_Unique()
+            => CollectionAssert.AllItemsAreUnique(Enumerable.Concat(Direction.Cardinal.All, Direction.InterCardinal.All).Concat(Direction.IntermediateCardinal.All).ToArray(), "Duplicate(s) detected.");
 
         [TestMethod]
-        public void All_Direction_Inversions_Are_Unique() 
+        public void All_Direction_Inversions_Are_Unique()
             => CollectionAssert.AllItemsAreUnique(
                 Enumerable.Concat(
-                    Direction.CardinalDirections.Select(d => d.Inverse).ToArray(), 
-                    Direction.IntercardinalDirections.Select(d => d.Inverse).ToArray())
-                        .Concat(Direction.IntermediateCardinalDirections.Select(d => d.Inverse).ToArray()).ToArray(), "Duplicate(s) detected.");
+                    Direction.Cardinal.All.Select(d => d.Inverse).ToArray(),
+                    Direction.InterCardinal.All.Select(d => d.Inverse).ToArray())
+                        .Concat(Direction.IntermediateCardinal.All.Select(d => d.Inverse).ToArray()).ToArray(), "Duplicate(s) detected.");
 
         [TestMethod]
         public void All_Direction_Inversions_Are_Pointers_To_Different_Directions()
         {
-            foreach (var direction in Direction.CardinalDirections)
+            foreach (var direction in Direction.Cardinal.All)
                 Assert.AreNotEqual(direction, direction.Inverse, $"Inverse of {direction} is itself.");
 
-            foreach (var direction in Direction.IntercardinalDirections)
+            foreach (var direction in Direction.InterCardinal.All)
                 Assert.AreNotEqual(direction, direction.Inverse, $"Inverse of {direction} is itself.");
 
-            foreach (var direction in Direction.IntermediateCardinalDirections)
+            foreach (var direction in Direction.IntermediateCardinal.All)
                 Assert.AreNotEqual(direction, direction.Inverse, $"Inverse of {direction} is itself.");
         }
 
@@ -62,13 +58,13 @@ namespace sourcetests
         public void All_Direction_Names_Are_Unique()
             => CollectionAssert.AllItemsAreUnique(
                 Enumerable.Concat(
-                        Direction.CardinalDirections.Select(d => d.Name).ToArray(),
-                        Direction.IntercardinalDirections.Select(d => d.Name).ToArray())
-                    .Concat(Direction.IntermediateCardinalDirections.Select(d => d.Name).ToArray()).ToArray(), "Duplicate(s) detected.");
+                        Direction.Cardinal.All.Select(d => d.Name).ToArray(),
+                        Direction.InterCardinal.All.Select(d => d.Name).ToArray())
+                    .Concat(Direction.IntermediateCardinal.All.Select(d => d.Name).ToArray()).ToArray(), "Duplicate(s) detected.");
 
 
         [TestMethod]
-        public void Cycling_Terminates_Prior_To_Overlap() 
+        public void Cycling_Terminates_Prior_To_Overlap()
             => Assert.AreNotEqual(Direction.CycleClockwise().First(), Direction.CycleClockwise().Last());
 
         [TestMethod]
@@ -77,12 +73,12 @@ namespace sourcetests
         [TestMethod]
         public void Dot_Net_Framework_Compiles_Globally_NonNull_TypeSafeEnum_Enumerations()
         {
-            CollectionAssert.AllItemsAreNotNull(Direction.CardinalDirections.ToArray(),
-                $"IReadonlyList {nameof(Direction.CardinalDirections)} contains null-pointer-reference(s).");
-            CollectionAssert.AllItemsAreNotNull(Direction.IntercardinalDirections.ToArray(),
-                $"IReadonlyList {nameof(Direction.IntercardinalDirections)} contains null-pointer-reference(s).");
-            CollectionAssert.AllItemsAreNotNull(Direction.IntermediateCardinalDirections.ToArray(),
-                $"IReadonlyList {nameof(Direction.IntermediateCardinalDirections)} contains null-pointer-reference(s).");
+            CollectionAssert.AllItemsAreNotNull(Direction.Cardinal.All.ToArray(),
+                $"{nameof(Direction.Cardinal)} contains null-pointer-reference(s).");
+            CollectionAssert.AllItemsAreNotNull(Direction.IntermediateCardinal.All.ToArray(),
+                $"{nameof(Direction.IntermediateCardinal)} contains null-pointer-reference(s).");
+            CollectionAssert.AllItemsAreNotNull(Direction.IntermediateCardinal.All.ToArray(),
+                $"{nameof(Direction.IntermediateCardinal.All)} contains null-pointer-reference(s).");
         }
     }
 }

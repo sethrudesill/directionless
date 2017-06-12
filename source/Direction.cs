@@ -1,52 +1,21 @@
-﻿[System.Diagnostics.DebuggerDisplay("Name", Name = "{Name} ({Id})")]
-public abstract class Direction : System.IComparable<Direction>, System.IEquatable<Direction>, System.IEquatable<string>, System.IEquatable<byte>, System.IEquatable<int>
+﻿using System;
+using System.Collections.Generic;
+
+[System.Diagnostics.DebuggerDisplay("Name", Name = "{Name} ({Id})")]
+public abstract class Direction : IDirection, IComparable<Direction>, IEquatable<Direction>, IEquatable<string>, IEquatable<byte>, IEquatable<int>
 {
-    public static Direction Default => Cardinal.North;
-    public static readonly System.Collections.Generic.IEnumerable<Direction> CardinalDirections = new System.Collections.Generic.List<Direction>() { Cardinal.North, Cardinal.East, Cardinal.South, Cardinal.West };
-    public static readonly System.Collections.Generic.IEnumerable<Direction> IntercardinalDirections = new System.Collections.Generic.List<Direction>() { Intercardinal.NorthNortheast, Intercardinal.NorthNorthwest, Intercardinal.SouthSoutheast, Intercardinal.SouthSouthwest, Intercardinal.EastNortheast, Intercardinal.EastSoutheast, Intercardinal.WestNorthwest, Intercardinal.WestSouthwest };
-    public static readonly System.Collections.Generic.IEnumerable<Direction> IntermediateCardinalDirections = new System.Collections.Generic.List<Direction>() { IntermediateCardinal.Northeast, IntermediateCardinal.Northwest, IntermediateCardinal.Southeast, IntermediateCardinal.Southwest, };
-
-    public static System.Collections.Generic.IEnumerable<Direction> CycleClockwise()
-    {
-        yield return Cardinal.North;
-        yield return Intercardinal.NorthNortheast;
-        yield return IntermediateCardinal.Northeast;
-        yield return Intercardinal.EastNortheast;
-        yield return Cardinal.East;
-        yield return Intercardinal.EastSoutheast;
-        yield return IntermediateCardinal.Southeast;
-        yield return Intercardinal.SouthSoutheast;
-        yield return Cardinal.South;
-        yield return Intercardinal.SouthSouthwest;
-        yield return IntermediateCardinal.Southwest;
-        yield return Intercardinal.WestSouthwest;
-        yield return Cardinal.West;
-        yield return Intercardinal.WestNorthwest;
-        yield return IntermediateCardinal.Northwest;
-        yield return Intercardinal.NorthNorthwest;
-    }
-
-    public static System.Collections.Generic.IEnumerable<Direction> CycleCounterClockwise() => System.Linq.Enumerable.Reverse(CycleClockwise());
-
-    public static System.Collections.Generic.IEnumerable<Direction> RotateClockwise()
-    {
-        foreach (var direction in CycleClockwise())
-            yield return direction;
-
-        yield return System.Linq.Enumerable.First(CycleClockwise());
-    }
-
-    public static System.Collections.Generic.IEnumerable<Direction> RotateCounterClockwise()
-    {
-        foreach (var direction in CycleCounterClockwise())
-            yield return direction;
-
-        yield return System.Linq.Enumerable.First(CycleCounterClockwise());
-    }
-
     protected abstract byte Id { get; }
     public abstract string Name { get; }
-    public abstract Direction Inverse { get; }
+    public abstract IDirection Inverse { get; }
+
+    /// <summary>
+    ///     Prevent outsiders from creating new types of directions.
+    /// </summary>
+    private Direction()
+    {
+        
+    }    
+
     public int CompareTo(Direction other) => other?.Id.CompareTo(this.Id) ?? -1;
     public bool Equals(Direction other) => other?.GetHashCode().Equals(this.GetHashCode()) ?? false;
     public bool Equals(string name) => this.Name.Equals(name, System.StringComparison.OrdinalIgnoreCase);
@@ -57,131 +26,220 @@ public abstract class Direction : System.IComparable<Direction>, System.IEquatab
     public override string ToString() => this.Name;
     public static bool operator ==(Direction left, Direction right) => left != null && right != null && left.Equals(right);
     public static bool operator !=(Direction left, Direction right) => !(left == right);
-
-    public abstract class Cardinal : Direction
+    public static bool operator ==(string left, Direction right) => right?.Equals(left) ?? false;
+    public static bool operator !=(string left, Direction right) => !(left == right);
+    public static IEnumerable<Direction> CycleClockwise()
     {
-        public static readonly Cardinal North = new NorthCardinal(), South = new SouthCardinal(), East = new EastCardinal(), West = new WestCardinal();
-        
-        private sealed class NorthCardinal : Cardinal
+        yield return Cardinal.North;
+        yield return InterCardinal.NorthNortheast;
+        yield return IntermediateCardinal.Northeast;
+        yield return InterCardinal.EastNortheast;
+        yield return Cardinal.East;
+        yield return InterCardinal.EastSoutheast;
+        yield return IntermediateCardinal.Southeast;
+        yield return InterCardinal.SouthSoutheast;
+        yield return Cardinal.South;
+        yield return InterCardinal.SouthSouthwest;
+        yield return IntermediateCardinal.Southwest;
+        yield return InterCardinal.WestSouthwest;
+        yield return Cardinal.West;
+        yield return InterCardinal.WestNorthwest;
+        yield return IntermediateCardinal.Northwest;
+        yield return InterCardinal.NorthNorthwest;
+    }
+
+    public static IEnumerable<Direction> CycleCounterClockwise() => System.Linq.Enumerable.Reverse(CycleClockwise());
+
+    public static IEnumerable<Direction> RotateClockwise()
+    {
+        foreach (var direction in CycleClockwise())
+            yield return direction;
+
+        yield return System.Linq.Enumerable.First(CycleClockwise());
+    }
+
+    public static IEnumerable<Direction> RotateCounterClockwise()
+    {
+        foreach (var direction in CycleCounterClockwise())
+            yield return direction;
+
+        yield return System.Linq.Enumerable.First(CycleCounterClockwise());
+    }
+
+    public static class Cardinal
+    {
+        public static Direction North { get; } = new NorthCardinal();
+        public static Direction South { get; } = new SouthCardinal();
+        public static Direction East { get; } = new EastCardinal();
+        public static Direction West { get; } = new WestCardinal();
+
+        public static IEnumerable<Direction> All
+        {
+            get
+            {
+                yield return North;
+                yield return South;
+                yield return East;
+                yield return West;
+            }
+        }
+
+        private sealed class NorthCardinal : Direction
         {
             protected override byte Id { get; } = 0;
             public override string Name { get; } = nameof(North);
-            public override Direction Inverse => South;
+            public override IDirection Inverse => South;
         }
 
-        private sealed class SouthCardinal : Cardinal
+        private sealed class SouthCardinal : Direction
         {
             protected override byte Id { get; } = 1;
             public override string Name { get; } = nameof(South);
-            public override Direction Inverse => North;
+            public override IDirection Inverse => North;
         }
 
-        private sealed class EastCardinal : Cardinal
+        private sealed class EastCardinal : Direction
         {
             protected override byte Id { get; } = 2;
             public override string Name { get; } = nameof(East);
-            public override Direction Inverse => West;
+            public override IDirection Inverse => West;
         }
 
-        private sealed class WestCardinal : Cardinal
+        private sealed class WestCardinal : Direction
         {
             protected override byte Id { get; } = 3;
             public override string Name { get; } = nameof(West);
-            public override Direction Inverse => East;
+            public override IDirection Inverse => East;
         }
     }
 
-    public abstract class Intercardinal : Direction
+    public static class InterCardinal
     {
-        public static readonly Intercardinal NorthNortheast = new NorthNortheastIntercardinal(), NorthNorthwest = new NorthNorthwestIntercardinal(), SouthSoutheast = new SouthSoutheastIntercardinal(), SouthSouthwest = new SouthSouthwestIntercardinal(), EastNortheast = new EastNortheastIntercardinal(), EastSoutheast = new EastSoutheastIntercardinal(), WestNorthwest = new WestNorthwestIntercardinal(), WestSouthwest = new WestSouthwestIntercardinal();
+        public static Direction NorthNortheast { get; } = new NorthNortheastInterCardinal();
+        public static Direction NorthNorthwest { get; } = new NorthNorthwestInterCardinal();
+        public static Direction SouthSoutheast { get; } = new SouthSoutheastInterCardinal();
+        public static Direction SouthSouthwest { get; } = new SouthSouthwestInterCardinal();
+        public static Direction EastNortheast { get; } = new EastNortheastInterCardinal();
+        public static Direction EastSoutheast { get; } = new EastSoutheastInterCardinal();
+        public static Direction WestNorthwest { get; } = new WestNorthwestInterCardinal();
+        public static Direction WestSouthwest { get; } = new WestSouthwestInterCardinal();
 
-        private sealed class NorthNortheastIntercardinal : Intercardinal
+        public static IEnumerable<Direction> All
+        {
+            get
+            {
+                yield return NorthNortheast;
+                yield return NorthNorthwest;
+                yield return SouthSoutheast;
+                yield return SouthSouthwest;
+                yield return EastNortheast;
+                yield return EastSoutheast;
+                yield return WestNorthwest;
+                yield return WestSouthwest;
+            }
+        }
+
+        private sealed class NorthNortheastInterCardinal : Direction
         {
             protected override byte Id { get; } = 4;
             public override string Name { get; } = nameof(NorthNortheast);
-            public override Direction Inverse => SouthSouthwest;
+            public override IDirection Inverse => SouthSouthwest;
         }
 
-        private sealed class NorthNorthwestIntercardinal : Intercardinal
+        private sealed class NorthNorthwestInterCardinal : Direction
         {
             protected override byte Id { get; } = 5;
             public override string Name { get; } = nameof(NorthNorthwest);
-            public override Direction Inverse => SouthSoutheast;
+            public override IDirection Inverse => SouthSoutheast;
         }
 
-        private sealed class SouthSoutheastIntercardinal : Intercardinal
+        private sealed class SouthSoutheastInterCardinal : Direction
         {
             protected override byte Id { get; } = 6;
             public override string Name { get; } = nameof(SouthSoutheast);
-            public override Direction Inverse => NorthNorthwest;
+            public override IDirection Inverse => NorthNorthwest;
         }
 
-        private sealed class SouthSouthwestIntercardinal : Intercardinal
+        private sealed class SouthSouthwestInterCardinal : Direction
         {
             protected override byte Id { get; } = 7;
             public override string Name { get; } = nameof(SouthSouthwest);
-            public override Direction Inverse => NorthNortheast;
+            public override IDirection Inverse => NorthNortheast;
         }
 
-        private sealed class EastNortheastIntercardinal : Intercardinal
+        private sealed class EastNortheastInterCardinal : Direction
         {
             protected override byte Id { get; } = 8;
             public override string Name { get; } = nameof(EastNortheast);
-            public override Direction Inverse => WestSouthwest;
+            public override IDirection Inverse => WestSouthwest;
         }
 
-        private sealed class EastSoutheastIntercardinal : Intercardinal
+        private sealed class EastSoutheastInterCardinal : Direction
         {
             protected override byte Id { get; } = 9;
             public override string Name { get; } = nameof(EastSoutheast);
-            public override Direction Inverse => WestNorthwest;
+            public override IDirection Inverse => WestNorthwest;
         }
 
-        private sealed class WestSouthwestIntercardinal : Intercardinal
+        private sealed class WestSouthwestInterCardinal : Direction
         {
             protected override byte Id { get; } = 10;
             public override string Name { get; } = nameof(WestSouthwest);
-            public override Direction Inverse => EastNortheast;
+            public override IDirection Inverse => EastNortheast;
         }
 
-        private sealed class WestNorthwestIntercardinal : Intercardinal
+        private sealed class WestNorthwestInterCardinal : Direction
         {
             protected override byte Id { get; } = 11;
             public override string Name { get; } = nameof(WestNorthwest);
-            public override Direction Inverse => EastSoutheast;
+            public override IDirection Inverse => EastSoutheast;
         }
     }
 
-    public abstract class IntermediateCardinal : Direction
+    public static class IntermediateCardinal
     {
-        public static readonly IntermediateCardinal Northwest = new NorthwestIntermediateCardinal(), Northeast = new NortheastIntermediateCardinal(), Southwest = new SouthwestIntermediateCardinal(), Southeast = new SoutheastIntermediateCardinal();
-        
-        private sealed class NorthwestIntermediateCardinal : IntermediateCardinal
+        public static Direction Northwest { get; } = new NorthwestIntermediateCardinal();
+        public static Direction Northeast { get; } = new NortheastIntermediateCardinal();
+        public static Direction Southwest { get; } = new SouthwestIntermediateCardinal();
+        public static Direction Southeast { get; } = new SoutheastIntermediateCardinal();
+
+        public static IEnumerable<Direction> All
+        {
+            get
+            {
+                yield return IntermediateCardinal.Northeast;
+                yield return IntermediateCardinal.Northwest;
+                yield return IntermediateCardinal.Southeast;
+                yield return IntermediateCardinal.Southwest;
+            }
+        }
+
+        private sealed class NorthwestIntermediateCardinal : Direction
         {
             protected override byte Id { get; } = 12;
             public override string Name { get; } = nameof(Northwest);
-            public override Direction Inverse => Southeast;
+            public override IDirection Inverse => Southeast;
         }
 
-        private sealed class NortheastIntermediateCardinal : IntermediateCardinal
+        private sealed class NortheastIntermediateCardinal : Direction
         {
             protected override byte Id { get; } = 13;
             public override string Name { get; } = nameof(Northeast);
-            public override Direction Inverse => Southwest;
+            public override IDirection Inverse => Southwest;
         }
 
-        private sealed class SouthwestIntermediateCardinal : IntermediateCardinal
+        private sealed class SouthwestIntermediateCardinal : Direction
         {
             protected override byte Id { get; } = 14;
             public override string Name { get; } = nameof(Southwest);
-            public override Direction Inverse => Northeast;
+            public override IDirection Inverse => Northeast;
         }
 
-        private sealed class SoutheastIntermediateCardinal : IntermediateCardinal
+        private sealed class SoutheastIntermediateCardinal : Direction
         {
             protected override byte Id { get; } = 15;
             public override string Name { get; } = nameof(Southeast);
-            public override Direction Inverse => Northwest;
+            public override IDirection Inverse => Northwest;
         }
     }
 }
