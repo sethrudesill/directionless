@@ -11,18 +11,8 @@ By encapsulating initialization details as private, only extension-of and not mu
 
 ![directionless](https://github.com/sethrudesill/directionless/blob/master/directionless-code-map.png)
 
-## usage
-Import the nuget package, build your own dll, or reference the library directly. Once referenced, there is no namespace. Use Direction.CycleClockwise() to enumerate all of the cardinal, intercardinal, and intermediate cardinal directions. 
-
-## maintenance
-I will add more scientific analysis of the runtime performance such as garbage collection behavior in a managed runtime when the currently private sealed concrete types are exposed public (while still having a private constructor) and C# 7.0+ pattern-matching type-switching is utilized.
-
-## controversy
-
-![directionless-controversy](https://github.com/sethrudesill/directionless/blob/master/directionless-controversy.png)
-
-# performance metrics (naive)
-## dotnetcore/dotnetstandard 2.0
+### performance metrics (naive)
+#### dotnetcore/dotnetstandard 2.0
 Version 3.0.0 results from 1,000,000 iterations
 
 * 00:00:06.4303034 | Casting Switch
@@ -30,5 +20,18 @@ Version 3.0.0 results from 1,000,000 iterations
 * 00:00:03.0351476 | Dictionary Lookup
 * 00:00:01.4391368 | Strongly Typed Enum Read-Only Reference Type
 
-## dotnetframework 4.5
-Who cares?
+#### dotnetframework 4.5
+Who cares? Seriously.
+
+# usage
+Import the nuget package, build your own dll, or reference the library directly. Once referenced, there is no namespace. Use Direction.CycleClockwise() to enumerate all of the cardinal, intercardinal, and intermediate cardinal directions. 
+
+## tools
+As-is, Visual Studio 2017 version 15.3 Preview with the DotNetCore 2.0 SDK is required, however you can simply copy and paste the code into a new project and do whatever you want.
+
+# maintenance
+I will add more scientific analysis of the runtime performance such as garbage collection behavior in a managed runtime when the currently private sealed concrete types are exposed public (while still having a private constructor) and C# 7.0+ pattern-matching type-switching is utilized.
+
+# controversy
+
+![directionless-controversy](https://github.com/sethrudesill/directionless/blob/master/directionless-controversy.png)

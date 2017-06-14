@@ -24,10 +24,12 @@ public abstract class Direction : IDirection, IComparable<Direction>, IEquatable
     public override bool Equals(object obj) => (obj as Direction)?.Equals(this) ?? false;
     public override int GetHashCode() => this.Id;
     public override string ToString() => this.Name;
+
     public static bool operator ==(Direction left, Direction right) => left != null && right != null && left.Equals(right);
     public static bool operator !=(Direction left, Direction right) => !(left == right);
     public static bool operator ==(string left, Direction right) => right?.Equals(left) ?? false;
     public static bool operator !=(string left, Direction right) => !(left == right);
+    
     public static IEnumerable<Direction> CycleClockwise()
     {
         yield return Cardinal.North;
